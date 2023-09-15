@@ -1,6 +1,5 @@
 package com.integrated.techhub.common.config;
 
-import com.integrated.techhub.pr.infra.persist.PullRequestQueryRepositoryImpl;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -16,11 +15,6 @@ public class QuerydslConfig {
     @Bean
     public JPAQueryFactory jpaQueryFactory() {
         return new JPAQueryFactory(entityManager);
-    }
-
-    @Bean
-    public PullRequestQueryRepositoryImpl petFoodQueryRepository() {
-        return new PullRequestQueryRepositoryImpl(jpaQueryFactory());
     }
 
 }

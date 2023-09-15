@@ -9,7 +9,7 @@ public class PullRequestFixture {
         return PullRequest.builder()
                 .memberId(memberId)
                 .missionId(missionId)
-                .title("[MVC 구현하기 - 2단계] 베베(최원용) 미션 제출합니다. ")
+                .title("[MVC 구현하기 - 2단계] 베베(최원용) 미션 제출합니다.")
                 .status(Status.OPEN)
                 .build();
     }
