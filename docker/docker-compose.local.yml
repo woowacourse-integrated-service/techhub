@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: techhub
+    image: mysql/mysql-server
+    environment:
+      MYSQL_DATABASE: techhub
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_PASSWORD: root
+      TZ: 'Asia/Seoul'
+    ports:
+      - 13306:3306
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+
