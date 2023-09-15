@@ -1,0 +1,18 @@
+---
+# application
+spring:
+  profiles:
+    active: dev
+
+---
+# jwt
+spring:
+  config:
+    import: classpath:/jwt-env.properties
+  auth:
+    jwt:
+      header: ${JWT_HEADER}
+      secret: ${JWT_SECRET}
+      accessExp: ${JWT_ACCESS_EXP}
+      refreshExp: ${JWT_REFRESH_EXP}
+      prefix: ${JWT_PREFIX}
