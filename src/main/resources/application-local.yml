@@ -1,0 +1,33 @@
+---
+# port
+server:
+  port: 8080
+
+---
+# database
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:13306/techhub
+    username: root
+    password: root
+
+---
+# jpa
+spring:
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+        default_batch_fetch_size: 30
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: never
