@@ -16,6 +16,9 @@
 .idea/**/gradle.xml
 .idea/**/libraries
 
+src/main/resources/jwt-env.properties
+src/main/resources/database-env.properties
+
 cmake-build-*/
 .idea/**/mongoSettings.xml
 *.iws
