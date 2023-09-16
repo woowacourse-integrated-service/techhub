@@ -48,5 +48,4 @@ public class Member {
         this.bio = bio;
         this.position = position;
     }
-
 }
