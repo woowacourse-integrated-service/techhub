@@ -22,7 +22,7 @@ spring:
   data:
     redis:
       host: localhost
-      port: 637
+      port: 6379
 jwt:
   secret-key: this1-is2-techhub3-test4-secret5-key6
   expire-length: 604800000
