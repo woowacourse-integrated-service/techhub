@@ -3,6 +3,7 @@ package com.integrated.techhub.mail.presentation;
 import com.integrated.techhub.auth.application.AuthQueryService;
 import com.integrated.techhub.mail.dto.MailSendRequest;
 import com.integrated.techhub.mail.MailService;
+import com.integrated.techhub.mail.dto.MailValidateRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,12 @@ public class MailController {
     public ResponseEntity<Void> sendMail(@RequestBody @Valid final MailSendRequest request) {
         authQueryService.validateExistedMember(request);
         mailService.sendMail(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/validation")
+    public ResponseEntity<Void> validateAuthorityCode(@RequestBody @Valid final MailValidateRequest request) {
+        mailService.validateAuthorityCode(request);
         return ResponseEntity.ok().build();
     }
 

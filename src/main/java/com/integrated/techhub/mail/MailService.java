@@ -1,6 +1,8 @@
 package com.integrated.techhub.mail;
 
 import com.integrated.techhub.mail.dto.MailSendRequest;
+import com.integrated.techhub.mail.dto.MailValidateRequest;
+import com.integrated.techhub.mail.exception.AuthorityCodeNotFoundException;
 import com.integrated.techhub.member.domain.AuthorityCode;
 import com.integrated.techhub.member.domain.repository.AuthorityCodeRepository;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +61,12 @@ public class MailService {
         final Context context = new Context();
         context.setVariable(TEMPLATE_CODE_NAME, randomAuthCode);
         return templateEngine.process(TEMPLATE_NAME, context);
+    }
+
+    public void validateAuthorityCode(final MailValidateRequest request) {
+        final AuthorityCode authorityCode = authorityCodeRepository.findById(request.email())
+                .orElseThrow(AuthorityCodeNotFoundException::new);
+        authorityCode.validateAuthorityCode(request.authorityCode());
     }
 
 }
