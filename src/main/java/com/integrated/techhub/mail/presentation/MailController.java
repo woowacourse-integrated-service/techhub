@@ -22,7 +22,7 @@ public class MailController {
 
     @PostMapping("/authorization-code")
     public ResponseEntity<Void> sendMail(@RequestBody @Valid final MailSendRequest request) {
-        authQueryService.validateExistedMember(request);
+        authQueryService.validateExistedMember(request.email());
         mailService.sendMail(request);
         return ResponseEntity.ok().build();
     }
