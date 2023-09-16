@@ -20,7 +20,7 @@ public class PullRequestControllerSteps {
     public static ExtractableResponse<Response> 멤버_아이디로_풀_리퀘스트_조회_요청(Long memberId) {
         return given()
                 .when()
-                .get("/prs/" + memberId)
+                .get("/pull-requests/" + memberId)
                 .then()
                 .extract();
     }
