@@ -1,3 +1,10 @@
+# redis
+spring:
+  data:
+    redis:
+      host: localhost
+      port: ${REDIS_OUT_BOUND_PORT}
+
 ---
 # application
 spring:
