@@ -23,3 +23,19 @@ spring:
       accessExp: ${JWT_ACCESS_EXP}
       refreshExp: ${JWT_REFRESH_EXP}
       prefix: ${JWT_PREFIX}
+
+---
+# mail
+spring:
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true

@@ -12,7 +12,7 @@ public class AuthQueryService {
 
     private final MemberRepository memberRepository;
 
-    public void validateExistedMember(MailSendRequest request) {
+    public void validateExistedMember(final MailSendRequest request) {
         if (memberRepository.existByEmail(request.email())) {
             throw new MemberExistsException();
         }
