@@ -8,4 +8,5 @@ public record MailSendRequest(
         @NotBlank(message = "Null 또는 공백이 포함될 수 없습니다. 올바른 값인지 확인해주세요.")
         String email
 ) {
+
 }

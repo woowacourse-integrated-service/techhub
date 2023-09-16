@@ -1,4 +1,4 @@
-package com.integrated.techhub.mail;
+package com.integrated.techhub.mail.application;
 
 import com.integrated.techhub.mail.dto.MailSendRequest;
 import com.integrated.techhub.mail.dto.MailValidateRequest;
