@@ -1,7 +1,7 @@
 package com.integrated.techhub.mail.presentation;
 
 import com.integrated.techhub.auth.application.AuthQueryService;
-import com.integrated.techhub.dto.MailSendRequest;
+import com.integrated.techhub.mail.dto.MailSendRequest;
 import com.integrated.techhub.mail.MailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

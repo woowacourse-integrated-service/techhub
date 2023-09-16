@@ -1,6 +1,6 @@
 package com.integrated.techhub.mail;
 
-import com.integrated.techhub.dto.MailSendRequest;
+import com.integrated.techhub.mail.dto.MailSendRequest;
 import com.integrated.techhub.member.domain.AuthorityCode;
 import com.integrated.techhub.member.domain.repository.AuthorityCodeRepository;
 import lombok.RequiredArgsConstructor;

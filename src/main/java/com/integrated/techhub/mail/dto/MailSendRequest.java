@@ -1,4 +1,4 @@
-package com.integrated.techhub.dto;
+package com.integrated.techhub.mail.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,6 @@
 package com.integrated.techhub.auth.application;
 
-import com.integrated.techhub.dto.MailSendRequest;
+import com.integrated.techhub.mail.dto.MailSendRequest;
 import com.integrated.techhub.member.domain.repository.MemberRepository;
 import com.integrated.techhub.member.exception.MemberExistsException;
 import lombok.RequiredArgsConstructor;
