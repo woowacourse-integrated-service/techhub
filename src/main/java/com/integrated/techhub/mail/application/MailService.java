@@ -48,9 +48,9 @@ public class MailService {
     private MimeMessagePreparator createMimeMessagePreparator(final String receiverEmail, final String template) {
         return mimeMessage -> {
             final MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, UTF_8.name());
-            helper.setFrom(DOMAIN.value());
+            helper.setFrom(DOMAIN.getValue());
             helper.setTo(receiverEmail);
-            helper.setSubject(TITLE.value());
+            helper.setSubject(TITLE.getValue());
             helper.setText(template, true);
         };
     }

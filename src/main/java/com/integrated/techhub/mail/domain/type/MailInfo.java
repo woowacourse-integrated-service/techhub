@@ -1,5 +1,8 @@
 package com.integrated.techhub.mail.domain.type;
 
+import lombok.Getter;
+
+@Getter
 public enum MailInfo {
 
     DOMAIN("tech.hub.kr"),
@@ -9,10 +12,6 @@ public enum MailInfo {
 
     MailInfo(final String value) {
         this.value = value;
-    }
-
-    public String value() {
-        return value;
     }
 
 }
