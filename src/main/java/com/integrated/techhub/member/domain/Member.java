@@ -51,17 +51,6 @@ public class Member {
     @Enumerated(value = STRING)
     private Position position;
 
-    public Member(String email, String password, String nickname, Integer cardinalNumber, String githubUsername, String name, String bio, Position position) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.cardinalNumber = cardinalNumber;
-        this.githubUsername = githubUsername;
-        this.name = name;
-        this.bio = bio;
-        this.position = position;
-    }
-
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
