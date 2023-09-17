@@ -16,6 +16,7 @@
 .idea/**/gradle.xml
 .idea/**/libraries
 .idea/codeStyles
+.idea
 
 src/main/resources/jwt-env.properties
 src/main/resources/database-env.properties

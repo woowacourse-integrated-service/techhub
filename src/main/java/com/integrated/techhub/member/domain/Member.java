@@ -1,5 +1,6 @@
 package com.integrated.techhub.member.domain;
 
+import com.integrated.techhub.auth.domain.PasswordEncoder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -61,4 +62,7 @@ public class Member {
         this.position = position;
     }
 
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
 }
