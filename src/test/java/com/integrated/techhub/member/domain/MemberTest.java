@@ -9,7 +9,7 @@ class MemberTest {
     @Test
     void 생성자를_생성할수_있다() {
         assertDoesNotThrow(() -> new Member("moomin@gmail.com", "moomin12", "무민",
-                "홍길동", "반갑습니다", Position.BE));
+                5, "moomin", "홍길동", "반갑습니다", Position.BE));
     }
 
 }
