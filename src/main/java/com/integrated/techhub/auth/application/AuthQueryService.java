@@ -12,7 +12,7 @@ public class AuthQueryService {
     private final MemberRepository memberRepository;
 
     public void validateExistedMember(final String email) {
-        if (memberRepository.existByEmail(email)) {
+        if (memberRepository.existsByEmail(email)) {
             throw new MemberExistsException();
         }
     }
