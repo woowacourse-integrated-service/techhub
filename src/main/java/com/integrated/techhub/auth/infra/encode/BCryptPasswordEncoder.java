@@ -1,4 +1,4 @@
-package com.integrated.techhub.auth.encode;
+package com.integrated.techhub.auth.infra.encode;
 
 import com.integrated.techhub.auth.domain.PasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCrypt;

@@ -1,4 +1,4 @@
-package com.integrated.techhub.member.domain;
+package com.integrated.techhub.mail.domain;
 
 import com.integrated.techhub.mail.exception.AuthorityCodeNotMatchException;
 import lombok.Getter;
