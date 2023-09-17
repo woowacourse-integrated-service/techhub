@@ -1,7 +1,7 @@
 package com.integrated.techhub.auth.infra.encode;
 
 import com.integrated.techhub.auth.domain.PasswordEncoder;
-import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Component;
 
 @Component
