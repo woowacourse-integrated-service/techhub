@@ -13,7 +13,7 @@ import java.util.concurrent.Executor;
 @Slf4j
 @EnableAsync
 @Configuration
-public class AsyncConfiguration implements AsyncConfigurer {
+public class AsyncConfig implements AsyncConfigurer {
 
     @Override
     @Bean(name = "MailExecutor")
