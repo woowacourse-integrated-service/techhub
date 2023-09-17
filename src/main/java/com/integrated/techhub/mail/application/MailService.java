@@ -1,10 +1,11 @@
 package com.integrated.techhub.mail.application;
 
+import com.integrated.techhub.mail.domain.AuthorityCode;
+import com.integrated.techhub.mail.domain.AuthorityCodeRepository;
+import com.integrated.techhub.mail.domain.ITemplateEngine;
 import com.integrated.techhub.mail.dto.MailSendRequest;
 import com.integrated.techhub.mail.dto.MailValidateRequest;
 import com.integrated.techhub.mail.exception.AuthorityCodeNotFoundException;
-import com.integrated.techhub.mail.domain.AuthorityCode;
-import com.integrated.techhub.mail.domain.AuthorityCodeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -13,7 +14,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -33,7 +33,7 @@ public class MailService {
     private static final String TEMPLATE_CODE_NAME = "code";
 
     private final JavaMailSender mailSender;
-    private final SpringTemplateEngine templateEngine;
+    private final ITemplateEngine templateEngine;
     private final AuthorityCodeRepository authorityCodeRepository;
 
     @Async
