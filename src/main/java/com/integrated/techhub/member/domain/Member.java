@@ -65,4 +65,5 @@ public class Member {
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
+
 }

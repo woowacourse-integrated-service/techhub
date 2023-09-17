@@ -10,7 +10,7 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 @RequiredArgsConstructor
 public class SpringTemplateEngineWrapper implements ITemplateEngine {
 
-    private SpringTemplateEngine springTemplateEngine;
+    private final SpringTemplateEngine springTemplateEngine;
 
     @Override
     public String process(String template, IContext context) {
