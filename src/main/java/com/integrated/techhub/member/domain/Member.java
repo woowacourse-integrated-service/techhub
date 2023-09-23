@@ -1,10 +1,13 @@
 package com.integrated.techhub.member.domain;
 
+import com.integrated.techhub.auth.domain.PasswordEncoder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +17,8 @@ import static lombok.AccessLevel.PROTECTED;
 
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
 public class Member {
 
@@ -30,6 +35,12 @@ public class Member {
     @Column(length = 4, nullable = false)
     private String nickname;
 
+    @Column(nullable = false)
+    private Integer cardinalNumber;
+
+    @Column(nullable = false)
+    private String githubUsername;
+
     @Column(length = 6, nullable = false)
     private String name;
 
@@ -40,12 +51,8 @@ public class Member {
     @Enumerated(value = STRING)
     private Position position;
 
-    public Member(String email, String password, String nickname, String name, String bio, Position position) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.name = name;
-        this.bio = bio;
-        this.position = position;
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
     }
+
 }

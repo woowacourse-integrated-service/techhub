@@ -1,5 +1,6 @@
-package com.integrated.techhub.member.domain;
+package com.integrated.techhub.mail.domain;
 
+import com.integrated.techhub.mail.exception.AuthorityCodeNotMatchException;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -16,6 +17,12 @@ public class AuthorityCode {
     public AuthorityCode(String email, Integer value) {
         this.email = email;
         this.value = value;
+    }
+
+    public void validateAuthorityCode(int authorityCode) {
+        if (!value.equals(authorityCode)) {
+            throw new AuthorityCodeNotMatchException();
+        }
     }
 
 }

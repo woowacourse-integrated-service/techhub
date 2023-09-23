@@ -1,6 +1,5 @@
-package com.integrated.techhub.member.domain.repository;
+package com.integrated.techhub.mail.domain;
 
-import com.integrated.techhub.member.domain.AuthorityCode;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

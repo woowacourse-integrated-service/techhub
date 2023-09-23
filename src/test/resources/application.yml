@@ -38,3 +38,19 @@ logging:
         type:
           descriptor:
             sql: trace
+
+---
+# mail
+spring:
+  mail:
+    host: localhost
+    port: 8080
+    username: admin
+    password: admin
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
