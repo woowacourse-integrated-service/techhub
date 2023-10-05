@@ -1,6 +1,6 @@
 package com.integrated.techhub.member.fixture;
 
-import com.integrated.techhub.auth.dto.SignUpRequest;
+import com.integrated.techhub.auth.dto.request.SignUpRequest;
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.Position;
 

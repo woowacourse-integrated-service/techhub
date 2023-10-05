@@ -1,7 +1,6 @@
 package com.integrated.techhub.pr.domain.repository;
 
 import com.integrated.techhub.pr.domain.PullRequest;
-import com.integrated.techhub.pr.domain.fixture.PullRequestFixture;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import static com.integrated.techhub.pr.domain.fixture.PullRequestFixture.풀_리퀘스트_생성;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 class PullRequestRepositoryTest {

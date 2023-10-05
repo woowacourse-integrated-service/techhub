@@ -12,7 +12,6 @@ import java.util.List;
 
 import static com.integrated.techhub.pr.domain.fixture.PullRequestFixture.풀_리퀘스트_생성;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class PullRequestQueryServiceTest {

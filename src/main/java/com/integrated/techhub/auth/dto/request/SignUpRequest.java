@@ -1,4 +1,4 @@
-package com.integrated.techhub.auth.dto;
+package com.integrated.techhub.auth.dto.request;
 
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.Position;

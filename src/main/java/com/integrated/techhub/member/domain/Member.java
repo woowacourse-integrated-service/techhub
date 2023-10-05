@@ -1,11 +1,7 @@
 package com.integrated.techhub.member.domain;
 
 import com.integrated.techhub.auth.domain.PasswordEncoder;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,6 +49,10 @@ public class Member {
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void updateGithubUsername(final String githubUsername) {
+        this.githubUsername = githubUsername;
     }
 
 }

@@ -1,6 +1,6 @@
 package com.integrated.techhub.auth.application;
 
-import com.integrated.techhub.auth.dto.SignUpRequest;
+import com.integrated.techhub.auth.dto.request.SignUpRequest;
 import com.integrated.techhub.member.domain.repository.MemberRepository;
 import com.integrated.techhub.member.fixture.MemberFixture;
 import org.assertj.core.api.Assertions;

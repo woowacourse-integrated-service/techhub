@@ -36,7 +36,7 @@ public class MailService {
     private final ITemplateEngine templateEngine;
     private final AuthorityCodeRepository authorityCodeRepository;
 
-    @Async
+    @Async("MailExecutor")
     public void sendMail(final MailSendRequest request) {
         final int randomAuthCode = createRandomAuthCode();
         final String template = createTemplate(String.valueOf(randomAuthCode));
