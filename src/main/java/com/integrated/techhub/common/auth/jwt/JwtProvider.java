@@ -4,14 +4,18 @@ import com.integrated.techhub.auth.domain.RefreshToken;
 import com.integrated.techhub.auth.domain.repository.RefreshTokenRepository;
 import com.integrated.techhub.common.auth.jwt.exception.TokenInvalidException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.util.Date;
 
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
+import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Component
 @RequiredArgsConstructor
@@ -43,16 +47,18 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String getPayload(String token) {
+    public String getPayload(final String token) {
         return validateParseJws(token).getBody().getSubject();
     }
 
-    public Jws<Claims> validateParseJws(String token) {
+    public Jws<Claims> validateParseJws(final String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(jwtProperties.getEncodedSecretKey())
+                    .setSigningKey(jwtProperties.secretKey())
                     .build()
                     .parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            throw new IllegalArgumentException("토큰 만료임");
         } catch (Exception e) {
             throw new TokenInvalidException();
         }

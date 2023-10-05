@@ -23,7 +23,7 @@ public class GithubOAuthClient implements OAuthClient {
 
     private static final String ACCESS_TOKEN_URL = "https://github.com/login/oauth/access_token";
     private static final String CREW_INFO_URL = "https://api.github.com/user";
-    private static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/%s/%s/pulls";
+    private static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls";
     private static final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${spring.security.oauth2.client.registration.github.client-id}")
@@ -58,11 +58,9 @@ public class GithubOAuthClient implements OAuthClient {
     @Override
     public List<OAuthCrewGithubPrResponse> getCrewPrInfoList(final Member member, final String accessToken, final String repo) {
         final HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(accessToken);
         final HttpEntity<Void> request = new HttpEntity<>(headers);
-
         return restTemplate.exchange(
-                format(LIST_PULL_REQUEST_URL, member.getGithubUsername(), repo) + "?state=all&per_page=100",
+                format(LIST_PULL_REQUEST_URL, repo) + "?state=all&per_page=100",
                 GET,
                 request,
                 new ParameterizedTypeReference<List<OAuthCrewGithubPrResponse>>() {

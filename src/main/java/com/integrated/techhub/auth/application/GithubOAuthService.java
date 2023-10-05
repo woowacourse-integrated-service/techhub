@@ -21,11 +21,11 @@ public class GithubOAuthService {
 
     @Transactional
     public void setGithubTokens(
-            final Long memberId,
+            final String email,
             final OAuthTokensResponse tokensResponse,
             final OAuthCrewGithubUsernameResponse githubUsernameResponse
     ) {
-        Member member = memberRepository.getById(memberId);
+        Member member = memberRepository.getByEmail(email);
         accessTokenRepository.save(tokensResponse.toAccessToken(member.getEmail()));
         refreshTokenRepository.save(tokensResponse.toRefreshToken(member.getEmail()));
         member.updateGithubUsername(githubUsernameResponse.username());

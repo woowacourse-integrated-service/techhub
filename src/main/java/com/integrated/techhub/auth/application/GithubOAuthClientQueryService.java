@@ -25,8 +25,8 @@ public class GithubOAuthClientQueryService {
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public List<OAuthCrewGithubPrResponse> getCrewPrList(Long memberId, final String repo) {
-        final Member member = memberRepository.getById(memberId);
+    public List<OAuthCrewGithubPrResponse> getCrewPrList(final String email, final String repo) {
+        final Member member = memberRepository.getByEmail(email);
         final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByEmail(member.getEmail());
         final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByEmail(member.getEmail());
 

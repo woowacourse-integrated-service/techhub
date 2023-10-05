@@ -50,16 +50,16 @@ public class AuthController {
         final OAuthTokensResponse tokensResponse = githubOAuthClient.getAccessToken(code);
         final OAuthCrewGithubUsernameResponse crewInfoResponse = githubOAuthClient.getGithubUsername(
                 tokensResponse.accessToken());
-        githubOAuthService.setGithubTokens(authProperties.memberId(), tokensResponse, crewInfoResponse);
+        githubOAuthService.setGithubTokens(authProperties.email(), tokensResponse, crewInfoResponse);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/prs")
     public ResponseEntity<List<OAuthCrewGithubPrResponse>> getCrewPrList(
-            @Auth AuthProperties authProperties,
+//            @Auth final AuthProperties authProperties,
             @RequestParam final String repo
     ) {
-        List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList(authProperties.memberId(), repo);
+        final List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList("rltgjqmduftlagl@gmail.com", repo);
         return ResponseEntity.ok().body(crewPrList);
     }
 

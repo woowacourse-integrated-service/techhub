@@ -5,6 +5,7 @@ import com.integrated.techhub.common.auth.jwt.BearerTokenExtractor;
 import com.integrated.techhub.common.auth.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -16,6 +17,7 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final JwtProvider jwtProvider;
@@ -35,8 +37,8 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     ) {
         final HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         final String token = BearerTokenExtractor.extract(Objects.requireNonNull(request));
-        final String id = jwtProvider.getPayload(token);
-        return new AuthProperties(Long.valueOf(id));
+        final String email = jwtProvider.getPayload(token);
+        return new AuthProperties(email);
     }
 
 }
