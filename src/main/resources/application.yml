@@ -4,7 +4,6 @@ spring:
     redis:
       host: localhost
       port: ${REDIS_OUT_BOUND_PORT}
-
 ---
 # application
 spring:
@@ -14,8 +13,6 @@ spring:
 ---
 # jwt
 spring:
-  config:
-    import: classpath:/jwt-env.properties
   auth:
     jwt:
       header: ${JWT_HEADER}
