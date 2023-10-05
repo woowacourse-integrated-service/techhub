@@ -2,7 +2,7 @@ package com.integrated.techhub.auth.application;
 
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.repository.MemberRepository;
-import com.integrated.techhub.member.exception.MemberExistsException;
+import com.integrated.techhub.member.exception.MemberAlreadyExistsException;
 import com.integrated.techhub.member.fixture.MemberFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ class AuthQueryServiceTest {
         Member member = memberRepository.save(MemberFixture.무민);
 
         //when, then
-        assertThrows(MemberExistsException.class, () -> authQueryService.validateExistedMember(member.getEmail()));
+        assertThrows(MemberAlreadyExistsException.class, () -> authQueryService.validateExistedMember(member.getEmail()));
     }
 
 }

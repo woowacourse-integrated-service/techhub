@@ -1,7 +1,7 @@
 package com.integrated.techhub.auth.application;
 
 import com.integrated.techhub.member.domain.repository.MemberRepository;
-import com.integrated.techhub.member.exception.MemberExistsException;
+import com.integrated.techhub.member.exception.MemberAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class AuthQueryService {
 
     public void validateExistedMember(final String email) {
         if (memberRepository.existsByEmail(email)) {
-            throw new MemberExistsException();
+            throw new MemberAlreadyExistsException();
         }
     }
 

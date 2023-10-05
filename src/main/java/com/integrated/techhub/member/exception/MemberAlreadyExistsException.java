@@ -5,9 +5,9 @@ import com.integrated.techhub.common.exception.TechHubException;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-public class MemberExistsException extends TechHubException {
+public class MemberAlreadyExistsException extends TechHubException {
 
-    public MemberExistsException() {
+    public MemberAlreadyExistsException() {
         super(new ErrorCode(BAD_REQUEST, "이미 존재하는 회원입니다."));
     }
 

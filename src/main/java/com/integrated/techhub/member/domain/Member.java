@@ -1,6 +1,7 @@
 package com.integrated.techhub.member.domain;
 
 import com.integrated.techhub.auth.domain.PasswordEncoder;
+import com.integrated.techhub.member.exception.PasswordNotMatchException;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,7 +48,7 @@ public class Member {
     @Enumerated(value = STRING)
     private Position position;
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
+    public void encodePassword(final PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
 
@@ -55,4 +56,9 @@ public class Member {
         this.githubUsername = githubUsername;
     }
 
+    public void matchedPassword(final PasswordEncoder passwordEncoder, String password) {
+        if (!passwordEncoder.isMatch(password, this.password)) {
+            throw new PasswordNotMatchException();
+        }
+    }
 }

@@ -4,10 +4,12 @@ import com.integrated.techhub.auth.application.AuthService;
 import com.integrated.techhub.auth.application.GithubOAuthClient;
 import com.integrated.techhub.auth.application.GithubOAuthClientQueryService;
 import com.integrated.techhub.auth.application.GithubOAuthService;
+import com.integrated.techhub.auth.dto.request.LoginRequestDto;
 import com.integrated.techhub.auth.dto.request.SignUpRequest;
 import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.auth.dto.response.OAuthCrewGithubUsernameResponse;
 import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
+import com.integrated.techhub.auth.dto.response.TokenResponseDto;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
 import jakarta.validation.Valid;
@@ -32,6 +34,12 @@ public class AuthController {
     public ResponseEntity<Void> signUp(@RequestBody @Valid final SignUpRequest request) {
         final Long memberId = authService.registerMember(request);
         return ResponseEntity.created(URI.create("/members/" + memberId)).build();
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<TokenResponseDto> login(@RequestBody @Valid final LoginRequestDto request) {
+        final TokenResponseDto tokens = authService.getAccessToken(request.email(), request.password());
+        return ResponseEntity.ok().body(tokens);
     }
 
     @PutMapping("/login/oauth2/code/github")
