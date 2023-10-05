@@ -1,4 +1,4 @@
-package com.integrated.techhub.auth.infra.encode;
+package com.integrated.techhub.common.auth.encode;
 
 import com.integrated.techhub.auth.domain.PasswordEncoder;
 import org.mindrot.jbcrypt.BCrypt;

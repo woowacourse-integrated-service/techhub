@@ -1,5 +1,6 @@
 package com.integrated.techhub.auth.infra.encode;
 
+import com.integrated.techhub.common.auth.encode.BCryptPasswordEncoder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
