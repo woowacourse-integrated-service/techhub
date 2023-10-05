@@ -5,6 +5,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -14,24 +15,19 @@ import static io.jsonwebtoken.security.Keys.hmacShaKeyFor;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Component
+@RequiredArgsConstructor
 public class JwtProvider {
 
-    private final SecretKey key;
-    private final long validityInMilliseconds;
-
-    public JwtProvider(final JwtProperties jwtProperties) {
-        this.key = hmacShaKeyFor(jwtProperties.secretKey().getBytes(UTF_8));
-        this.validityInMilliseconds = jwtProperties.expireLength();
-    }
+    private final JwtProperties jwtProperties;
 
     public String create(String payload) {
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        final Date now = new Date();
+        final Date validity = new Date(now.getTime() + jwtProperties.accessExp());
         return Jwts.builder()
                 .setSubject(payload)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(key, SignatureAlgorithm.HS256)
+                .signWith(jwtProperties.getEncodedSecretKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -42,7 +38,7 @@ public class JwtProvider {
     public Jws<Claims> validateParseJws(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(key)
+                    .setSigningKey(jwtProperties.getEncodedSecretKey())
                     .build()
                     .parseClaimsJws(token);
         } catch (Exception e) {
