@@ -16,11 +16,14 @@ public class PullRequestQueryService {
 
     private final PullRequestRepository pullRequestRepository;
 
-    public List<GetPullRequestResponse> getPullRequestByMemberId(Long memberId) {
+    public List<GetPullRequestResponse> getPullRequestByMemberId(final Long memberId) {
         final List<PullRequest> pullRequests = pullRequestRepository.findByMemberId(memberId);
         return pullRequests.stream()
                 .map(GetPullRequestResponse::of)
                 .toList();
     }
 
+//    public void getMyPullRequestsByRepoName(final Long memberId, final String repoName) {
+//        pullRequestRepository.findByMemberIdAndRepoName();
+//    }
 }

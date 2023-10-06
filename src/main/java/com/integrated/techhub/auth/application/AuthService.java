@@ -31,8 +31,8 @@ public class AuthService {
     public TokenResponseDto getAccessToken(final String email, final String password) {
         final Member member = memberRepository.getByEmail(email);
         member.matchedPassword(passwordEncoder, password);
-        final String accessToken = jwtProvider.generateAccessToken(email);
-        final String refreshToken = jwtProvider.generateRefreshToken(email).getToken();
+        final String accessToken = jwtProvider.generateAccessToken(member.getId());
+        final String refreshToken = jwtProvider.generateRefreshToken(member.getId()).getToken();
         return new TokenResponseDto(accessToken, refreshToken);
     }
 

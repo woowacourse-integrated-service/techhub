@@ -2,11 +2,9 @@ package com.integrated.techhub.auth.presentation;
 
 import com.integrated.techhub.auth.application.AuthService;
 import com.integrated.techhub.auth.application.GithubOAuthClient;
-import com.integrated.techhub.auth.application.GithubOAuthClientQueryService;
 import com.integrated.techhub.auth.application.GithubOAuthService;
 import com.integrated.techhub.auth.dto.request.LoginRequestDto;
 import com.integrated.techhub.auth.dto.request.SignUpRequest;
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.auth.dto.response.OAuthCrewGithubUsernameResponse;
 import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
 import com.integrated.techhub.auth.dto.response.TokenResponseDto;
@@ -18,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,7 +46,7 @@ public class AuthController {
         final OAuthTokensResponse tokensResponse = githubOAuthClient.getAccessToken(code);
         final OAuthCrewGithubUsernameResponse crewInfoResponse = githubOAuthClient.getGithubUsername(
                 tokensResponse.accessToken());
-        githubOAuthService.setGithubTokens(authProperties.email(), tokensResponse, crewInfoResponse);
+        githubOAuthService.setGithubTokens(authProperties.memberId(), tokensResponse, crewInfoResponse);
         return ResponseEntity.ok().build();
     }
 

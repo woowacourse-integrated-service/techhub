@@ -36,8 +36,8 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     ) {
         final HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
         final String token = BearerTokenExtractor.extract(Objects.requireNonNull(request));
-        final String email = jwtProvider.getPayload(token);
-        return new AuthProperties(email);
+        final Long memberId = jwtProvider.getPayload(token);
+        return new AuthProperties(memberId);
     }
 
 }

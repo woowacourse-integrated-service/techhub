@@ -17,7 +17,7 @@ public class AccessToken {
     @Id
     private Long id;
     @Indexed
-    private String email;
+    private Long memberId;
 
     private String token;
 

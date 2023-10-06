@@ -10,17 +10,17 @@ public record OAuthTokensResponse(
         @JsonProperty("refresh_token") String refreshToken,
         @JsonProperty("refresh_token_expires_in") Long refreshTokenExp
 ) {
-    public AccessToken toAccessToken(final String email) {
+    public AccessToken toAccessToken(final Long memberId) {
         return AccessToken.builder()
-                .email(email)
+                .memberId(memberId)
                 .token(accessToken)
                 .ttl(accessTokenExp)
                 .build();
     }
 
-    public RefreshToken toRefreshToken(final String email) {
+    public RefreshToken toRefreshToken(final Long memberId) {
         return RefreshToken.builder()
-                .email(email)
+                .memberId(memberId)
                 .token(refreshToken)
                 .ttl(refreshTokenExp)
                 .build();

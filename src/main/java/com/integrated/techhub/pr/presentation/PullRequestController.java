@@ -20,6 +20,14 @@ public class PullRequestController {
     private final PullRequestQueryService pullRequestQueryService;
     private final GithubOAuthClientQueryService githubOAuthClientQueryService;
 
+//    @GetMapping("/my")
+//    public ResponseEntity<List<GetPullRequestResponse>> getLoginUserPullRequestsByRepoName(
+//            @Auth AuthProperties authProperties,
+//            @RequestParam String repoName
+//    ) {
+//        pullRequestQueryService.getMyPullRequestsByRepoName(authProperties.memberId(), repoName);
+//    }
+
     @GetMapping("/{memberId}")
     public ResponseEntity<List<GetPullRequestResponse>> searchPullRequest(@PathVariable Long memberId) {
         List<GetPullRequestResponse> pullRequests = pullRequestQueryService.getPullRequestByMemberId(memberId);
@@ -29,9 +37,9 @@ public class PullRequestController {
     @GetMapping
     public ResponseEntity<List<OAuthCrewGithubPrResponse>> getPrsByRepoName(
             @Auth final AuthProperties authProperties,
-            @RequestParam final String repo
+            @RequestParam final String repoName
     ) {
-        final List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList(authProperties.email(), repo);
+        final List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList(authProperties.memberId(), repoName);
         return ResponseEntity.ok().body(crewPrList);
     }
 
