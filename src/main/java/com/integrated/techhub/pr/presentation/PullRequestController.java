@@ -5,7 +5,7 @@ import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
 import com.integrated.techhub.pr.application.PullRequestQueryService;
-import com.integrated.techhub.pr.dto.response.GetPullRequestResponse;
+import com.integrated.techhub.pr.dto.response.PullRequestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,18 +20,13 @@ public class PullRequestController {
     private final PullRequestQueryService pullRequestQueryService;
     private final GithubOAuthClientQueryService githubOAuthClientQueryService;
 
-//    @GetMapping("/my")
-//    public ResponseEntity<List<GetPullRequestResponse>> getLoginUserPullRequestsByRepoName(
-//            @Auth AuthProperties authProperties,
-//            @RequestParam String repoName
-//    ) {
-//        pullRequestQueryService.getMyPullRequestsByRepoName(authProperties.memberId(), repoName);
-//    }
-
-    @GetMapping("/{memberId}")
-    public ResponseEntity<List<GetPullRequestResponse>> searchPullRequest(@PathVariable Long memberId) {
-        List<GetPullRequestResponse> pullRequests = pullRequestQueryService.getPullRequestByMemberId(memberId);
-        return ResponseEntity.ok().body(pullRequests);
+    @GetMapping("/my/{missionId}")
+    public ResponseEntity<List<PullRequestResponse>> getLoginUserPullRequestsByMissionId(
+            @Auth AuthProperties authProperties,
+            @PathVariable Long missionId
+    ) {
+        final List<PullRequestResponse> responses = pullRequestQueryService.getMyPullRequestsByMissionId(authProperties.memberId(), missionId);
+        return ResponseEntity.ok(responses);
     }
 
     @GetMapping

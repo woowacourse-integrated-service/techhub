@@ -26,9 +26,9 @@ public class PullRequest {
     private Long memberId;
 
     @Column(nullable = false)
-    private Long missionId;
+    private Long stepId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
     @Enumerated(value = STRING)
