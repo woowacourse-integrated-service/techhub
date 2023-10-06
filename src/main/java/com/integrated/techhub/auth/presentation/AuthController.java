@@ -28,7 +28,6 @@ public class AuthController {
     private final AuthService authService;
     private final GithubOAuthClient githubOAuthClient;
     private final GithubOAuthService githubOAuthService;
-    private final GithubOAuthClientQueryService githubOAuthClientQueryService;
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(@RequestBody @Valid final SignUpRequest request) {
@@ -52,15 +51,6 @@ public class AuthController {
                 tokensResponse.accessToken());
         githubOAuthService.setGithubTokens(authProperties.email(), tokensResponse, crewInfoResponse);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/prs")
-    public ResponseEntity<List<OAuthCrewGithubPrResponse>> getCrewPrList(
-            @Auth final AuthProperties authProperties,
-            @RequestParam final String repo
-    ) {
-        final List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList(authProperties.email(), repo);
-        return ResponseEntity.ok().body(crewPrList);
     }
 
 }
