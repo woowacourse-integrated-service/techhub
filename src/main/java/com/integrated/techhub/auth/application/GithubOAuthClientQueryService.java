@@ -25,20 +25,23 @@ public class GithubOAuthClientQueryService {
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public List<OAuthCrewGithubPrResponse> getCrewPrList(final Long memberId, final String repo) {
+    public List<OAuthCrewGithubPrResponse> getPrsByRepoName(final Long memberId, final String repo) {
         final Member member = memberRepository.getById(memberId);
         final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByMemberId(member.getId());
         final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByMemberId(member.getId());
 
+        // 액세스 토큰이 만료되지 않았다면 액세스 토큰으로 요청
         if (accessTokenOptional.isPresent()) {
             final String accessToken = accessTokenOptional.get().getToken();
-            return githubOAuthClient.getCrewPrInfoList(member, accessToken, repo);
+            return githubOAuthClient.getPrsByRepoName(accessToken, repo);
         }
+        // 액세스 토큰이 만료되었다면 리프레시 토큰으로 액세스 토큰 재발급 후 재발급 받은 액세스 토큰으로 요청
         if (refreshTokenOptional.isPresent()) {
             final String refreshToken = refreshTokenOptional.get().getToken();
             final String accessToken = githubOAuthClient.getNewAccessToken(refreshToken).accessToken();
-            return githubOAuthClient.getCrewPrInfoList(member, accessToken, repo);
+            return githubOAuthClient.getPrsByRepoName(accessToken, repo);
         }
+        // 리프레시 토큰까지 만료되었다면 유저에게 재로그인 요청
         throw new GithubRefreshTokenNotFoundException();
     }
 

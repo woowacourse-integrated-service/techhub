@@ -10,8 +10,8 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 @NoArgsConstructor(access = PRIVATE)
 public class BearerTokenExtractor {
 
-    private static final String BEARER_TYPE = "Bearer ";
-    private static final String BEARER_JWT_REGEX = "^Bearer [A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$";
+    private static final String BEARER_TYPE = "bearer ";
+    private static final String BEARER_JWT_REGEX = "^bearer [A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$";
 
     public static String extract(final HttpServletRequest request) {
         final String BearerToken = request.getHeader(AUTHORIZATION);

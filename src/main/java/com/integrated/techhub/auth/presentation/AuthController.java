@@ -2,10 +2,8 @@ package com.integrated.techhub.auth.presentation;
 
 import com.integrated.techhub.auth.application.AuthService;
 import com.integrated.techhub.auth.application.GithubOAuthClient;
-import com.integrated.techhub.auth.application.GithubOAuthService;
 import com.integrated.techhub.auth.dto.request.LoginRequestDto;
 import com.integrated.techhub.auth.dto.request.SignUpRequest;
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubUsernameResponse;
 import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
 import com.integrated.techhub.auth.dto.response.TokenResponseDto;
 import com.integrated.techhub.common.auth.annotation.Auth;
@@ -24,7 +22,6 @@ public class AuthController {
 
     private final AuthService authService;
     private final GithubOAuthClient githubOAuthClient;
-    private final GithubOAuthService githubOAuthService;
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(@RequestBody @Valid final SignUpRequest request) {
@@ -39,14 +36,13 @@ public class AuthController {
     }
 
     @PutMapping("/login/oauth2/code/github")
-    public ResponseEntity<Void> getCrewGithubInfo(
+    public ResponseEntity<Void> authorizeGithub(
             @Auth AuthProperties authProperties,
             @RequestParam final String code
     ) {
-        final OAuthTokensResponse tokensResponse = githubOAuthClient.getAccessToken(code);
-        final OAuthCrewGithubUsernameResponse crewInfoResponse = githubOAuthClient.getGithubUsername(
-                tokensResponse.accessToken());
-        githubOAuthService.setGithubTokens(authProperties.memberId(), tokensResponse, crewInfoResponse);
+        final OAuthTokensResponse tokensResponse = githubOAuthClient.getGithubTokens(code);
+        final Long memberId = authProperties.memberId();
+        authService.saveGithubTokens(tokensResponse.toAccessToken(memberId), tokensResponse.toRefreshToken(memberId));
         return ResponseEntity.ok().build();
     }
 

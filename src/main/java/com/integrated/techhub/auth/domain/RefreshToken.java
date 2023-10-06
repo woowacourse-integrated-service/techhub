@@ -21,10 +21,7 @@ public class RefreshToken {
 
     private String token;
 
-    private String authority;
-
-    @Indexed
-    private String organization;
+    private String type;
 
     @TimeToLive
     private Long ttl;

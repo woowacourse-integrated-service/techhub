@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
 
-public record OAuthTokensResponse(
+import java.io.Serializable;
+
+public record OAuthTokensResponse (
         @JsonProperty("access_token") String accessToken,
         @JsonProperty("expires_in") Long accessTokenExp,
         @JsonProperty("refresh_token") String refreshToken,
@@ -15,6 +17,7 @@ public record OAuthTokensResponse(
                 .memberId(memberId)
                 .token(accessToken)
                 .ttl(accessTokenExp)
+                .type("GITHUB")
                 .build();
     }
 
@@ -23,6 +26,8 @@ public record OAuthTokensResponse(
                 .memberId(memberId)
                 .token(refreshToken)
                 .ttl(refreshTokenExp)
+                .type("GITHUB")
                 .build();
     }
+
 }

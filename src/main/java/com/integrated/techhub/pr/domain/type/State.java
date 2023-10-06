@@ -1,9 +1,11 @@
 package com.integrated.techhub.pr.domain.type;
 
-public enum Status {
+import lombok.Getter;
+
+@Getter
+public enum State {
 
     OPEN,
-    CLOSED,
-    MERGED
+    CLOSED
 
 }

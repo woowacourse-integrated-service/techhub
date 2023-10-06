@@ -9,8 +9,8 @@ import org.springframework.data.redis.core.TimeToLive;
 import org.springframework.data.redis.core.index.Indexed;
 
 @Getter
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 @RedisHash(value = "access_token")
 public class AccessToken {
 
@@ -21,10 +21,7 @@ public class AccessToken {
 
     private String token;
 
-    private String authority;
-
-    @Indexed
-    private String organization;
+    private String type;
 
     @TimeToLive
     private Long ttl;

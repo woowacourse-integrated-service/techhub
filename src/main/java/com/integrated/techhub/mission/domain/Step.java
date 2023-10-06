@@ -25,10 +25,6 @@ public class Step {
     @Column(nullable = false)
     private Long number;
 
-    @Enumerated(STRING)
-    @Column(nullable = false)
-    private StepStatus status;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "mission_id")
     private Mission mission;

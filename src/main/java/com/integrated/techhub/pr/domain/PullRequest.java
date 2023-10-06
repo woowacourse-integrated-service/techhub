@@ -1,6 +1,6 @@
 package com.integrated.techhub.pr.domain;
 
-import com.integrated.techhub.pr.domain.type.Status;
+import com.integrated.techhub.pr.domain.type.State;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +32,6 @@ public class PullRequest {
     private String title;
 
     @Enumerated(value = STRING)
-    private Status status;
+    private State state;
 
 }
