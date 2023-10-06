@@ -25,7 +25,7 @@ public class GithubOAuthService {
             final OAuthTokensResponse tokensResponse,
             final OAuthCrewGithubUsernameResponse githubUsernameResponse
     ) {
-        Member member = memberRepository.getByEmail(email);
+        final Member member = memberRepository.getByEmail(email);
         accessTokenRepository.save(tokensResponse.toAccessToken(member.getEmail()));
         refreshTokenRepository.save(tokensResponse.toRefreshToken(member.getEmail()));
         member.updateGithubUsername(githubUsernameResponse.username());

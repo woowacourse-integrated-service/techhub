@@ -17,7 +17,7 @@ public class PullRequestQueryService {
     private final PullRequestRepository pullRequestRepository;
 
     public List<GetPullRequestResponse> getPullRequestByMemberId(Long memberId) {
-        List<PullRequest> pullRequests = pullRequestRepository.findByMemberId(memberId);
+        final List<PullRequest> pullRequests = pullRequestRepository.findByMemberId(memberId);
         return pullRequests.stream()
                 .map(GetPullRequestResponse::of)
                 .toList();

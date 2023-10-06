@@ -23,7 +23,7 @@ public class AuthService {
 
     public Long registerMember(final SignUpRequest request) {
         authQueryService.validateExistedMember(request.email());
-        Member member = request.toEntity();
+        final Member member = request.toEntity();
         member.encodePassword(passwordEncoder);
         return memberRepository.save(member).getId();
     }
