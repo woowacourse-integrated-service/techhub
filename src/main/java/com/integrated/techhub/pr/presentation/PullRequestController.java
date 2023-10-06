@@ -25,7 +25,7 @@ public class PullRequestController {
     private final PullRequestQueryService pullRequestQueryService;
     private final GithubOAuthClientQueryService githubOAuthClientQueryService;
 
-    @GetMapping("/my/{missionId}")
+    @GetMapping("/mine/{missionId}")
     public ResponseEntity<List<PullRequestResponse>> getLoginUserPullRequestsByMissionId(
             @Auth final AuthProperties authProperties,
             @PathVariable final Long missionId
@@ -34,7 +34,7 @@ public class PullRequestController {
         return ResponseEntity.ok(responses);
     }
 
-    @PutMapping("/sync")
+    @PutMapping("/sync/mine")
     public ResponseEntity<List<OAuthCrewGithubPrResponse>> syncMyPrsByRepoName(
             @Auth final AuthProperties authProperties,
             @RequestParam final String repoName
