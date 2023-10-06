@@ -1,6 +1,8 @@
 package com.integrated.techhub.pr.application;
 
 import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.member.domain.Member;
+import com.integrated.techhub.member.domain.repository.MemberRepository;
 import com.integrated.techhub.mission.domain.Step;
 import com.integrated.techhub.mission.domain.repository.StepRepository;
 import com.integrated.techhub.pr.domain.PullRequest;
@@ -21,6 +23,7 @@ import java.util.regex.Pattern;
 public class PullRequestService {
 
     private final StepRepository stepRepository;
+    private final MemberRepository memberRepository;
     private final PullRequestRepository pullRequestRepository;
 
     public void create(final Long memberId, final List<OAuthCrewGithubPrResponse> prsByRepoName) {
@@ -33,7 +36,7 @@ public class PullRequestService {
                 prs.add(pullRequest);
             }
         }
-        pullRequestRepository.saveAll(prs);
+        isNotExistSaveOrElseUpdate(memberId, prs);
     }
 
     private List<Long> getStepInTitle(final String title) {
@@ -48,6 +51,20 @@ public class PullRequestService {
             throw new StepNotFoundException(title);
         }
         return steps;
+    }
+
+    private void isNotExistSaveOrElseUpdate(final Long memberId, final List<PullRequest> requests) {
+        Member member = memberRepository.getById(memberId);
+        for (PullRequest pullRequest : requests) {
+            final List<PullRequest> prs = pullRequestRepository.findByTitleLikeNickname(member.getNickname());
+            if (prs.isEmpty()) {
+                pullRequestRepository.save(pullRequest);
+            } else {
+                for (PullRequest pr : prs) {
+                    pr.update(pullRequest.getTitle(), pullRequest.getState());
+                }
+            }
+        }
     }
 
 }

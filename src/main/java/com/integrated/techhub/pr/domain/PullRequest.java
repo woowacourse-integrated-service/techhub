@@ -34,4 +34,8 @@ public class PullRequest {
     @Enumerated(value = STRING)
     private State state;
 
+    public void update(final String title, final State state) {
+        this.title = title;
+        this.state = state;
+    }
 }
