@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @Slf4j
-@Configuration
+//@Configuration
 public class EmbeddedRedisConfig {
 
     @Value("${spring.data.redis.port}")

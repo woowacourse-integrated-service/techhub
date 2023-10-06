@@ -17,7 +17,6 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final JwtProvider jwtProvider;

@@ -20,7 +20,7 @@ services:
     container_name: redis
     image: redis:alpine
     command: redis-server --port 6379
-    hostname: techhub
+    hostname: localhost
     labels:
       - "name=redis"
       - "mode=standalone"

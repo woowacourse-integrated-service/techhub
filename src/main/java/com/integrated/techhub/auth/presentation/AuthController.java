@@ -56,10 +56,10 @@ public class AuthController {
 
     @GetMapping("/prs")
     public ResponseEntity<List<OAuthCrewGithubPrResponse>> getCrewPrList(
-//            @Auth final AuthProperties authProperties,
+            @Auth final AuthProperties authProperties,
             @RequestParam final String repo
     ) {
-        final List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList("rltgjqmduftlagl@gmail.com", repo);
+        final List<OAuthCrewGithubPrResponse> crewPrList = githubOAuthClientQueryService.getCrewPrList(authProperties.email(), repo);
         return ResponseEntity.ok().body(crewPrList);
     }
 
