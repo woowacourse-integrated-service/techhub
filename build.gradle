@@ -68,6 +68,7 @@ tasks.named('test') {
 }
 
 def generated = 'build/generated'
+def application = 'src/main/generated'
 
 tasks.withType(JavaCompile) {
 	options.getGeneratedSourceOutputDirectory().set(file(generated))
@@ -77,9 +78,13 @@ sourceSets {
 	main.java.srcDirs += [generated]
 }
 
-clean {
+task customClean(type: Delete) {
 	delete file(generated)
+	delete file(application)
 }
+
+clean.dependsOn customClean
+
 
 jacocoTestReport {
 	reports {
