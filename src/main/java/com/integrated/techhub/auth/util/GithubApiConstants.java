@@ -9,8 +9,16 @@ public class GithubApiConstants {
          * Exchange the code from the previous step for a user access token by making a POST request to this URL,
          * along with the following query parameters: https://github.com/login/oauth/access_token
          * */
-        public static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
-        public static final String GET_NEW_ACCESS_TOKEN_URL = "https://api.github.com/login/oauth/access_token?clientId=%s&client_secret=%s&grant_type=refresh_token&refresh_token=%s";
+        private static final String GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
+        private static final String NEW_ACCESS_TOKEN_URL = "https://api.github.com/login/oauth/access_token?clientId=%s&client_secret=%s&grant_type=refresh_token&refresh_token=%s";
+    }
+
+    public static String getGithubTokenUrl() {
+        return Auth.GITHUB_TOKEN_URL;
+    }
+
+    public static String getNewAccessTokenUrl(final String clientId, final String clientSecret, final String githubRefreshToken) {
+        return String.format(Auth.NEW_ACCESS_TOKEN_URL, clientId, clientSecret, githubRefreshToken);
     }
 
     public static class Member {
@@ -24,7 +32,15 @@ public class GithubApiConstants {
          * */
         @Deprecated
         public static final String MEMBER_INFO_URL = "https://api.github.com/user";
-        public static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls";
+        public static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls?state=all&page=%d";
+    }
+
+    public static String getMemberInfoUrl() {
+        return Member.MEMBER_INFO_URL;
+    }
+
+    public static String getListPullRequestUrl(final String repoName, final int page) {
+        return String.format(Member.LIST_PULL_REQUEST_URL, repoName, page);
     }
 
 }

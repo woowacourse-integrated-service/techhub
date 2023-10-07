@@ -2,10 +2,10 @@ package com.integrated.techhub.auth.presentation;
 
 import com.integrated.techhub.auth.application.AuthService;
 import com.integrated.techhub.auth.application.client.GithubRestTemplateClient;
-import com.integrated.techhub.auth.dto.request.LoginRequestDto;
+import com.integrated.techhub.auth.dto.request.LoginRequest;
 import com.integrated.techhub.auth.dto.request.SignUpRequest;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
-import com.integrated.techhub.auth.dto.response.TokenResponseDto;
+import com.integrated.techhub.auth.dto.response.TokenResponse;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
 import jakarta.validation.Valid;
@@ -30,8 +30,8 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public ResponseEntity<TokenResponseDto> login(@RequestBody @Valid final LoginRequestDto request) {
-        final TokenResponseDto tokens = authService.getAccessToken(request.email(), request.password());
+    public ResponseEntity<TokenResponse> login(@RequestBody @Valid final LoginRequest request) {
+        final TokenResponse tokens = authService.getAccessToken(request.email(), request.password());
         return ResponseEntity.ok().body(tokens);
     }
 

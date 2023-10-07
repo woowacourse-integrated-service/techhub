@@ -1,6 +1,6 @@
 package com.integrated.techhub.auth.dto.request;
 
-public record LoginRequestDto(
+public record LoginRequest(
         String email,
         String password
 ) {

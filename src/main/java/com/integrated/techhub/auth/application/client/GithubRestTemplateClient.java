@@ -5,9 +5,7 @@ import com.integrated.techhub.auth.application.client.dto.request.OAuthTokenRefr
 import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
-import com.integrated.techhub.auth.util.GithubApiConstants.Auth;
-import com.integrated.techhub.auth.util.GithubApiConstants.Member;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,24 +16,23 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.format;
+import static com.integrated.techhub.auth.util.GithubApiConstants.*;
 import static org.springframework.http.HttpMethod.GET;
 
 @Component
+@RequiredArgsConstructor
 public class GithubRestTemplateClient implements GithubClient {
 
     private static final RestTemplate restTemplate = new RestTemplate();
 
-    @Value("${spring.security.oauth2.client.registration.github.client-id}")
-    private String clientId;
-
-    @Value("${spring.security.oauth2.client.registration.github.client-secret}")
-    private String clientSecret;
+    private final GithubClientProperties githubClientProperties;
 
     @Override
     public OAuthTokensResponse getGithubTokens(final String code) {
+        final String clientId = githubClientProperties.clientId();
+        final String clientSecret = githubClientProperties.clientSecret();
         return restTemplate.postForObject(
-                Auth.GITHUB_TOKEN_URL,
+                getGithubTokenUrl(),
                 new GithubOAuthTokenRequest(clientId, clientSecret, code),
                 OAuthTokensResponse.class
         );
@@ -43,8 +40,10 @@ public class GithubRestTemplateClient implements GithubClient {
 
     @Override
     public OAuthTokensResponse getNewAccessToken(final String refreshToken) {
+        final String clientId = githubClientProperties.clientId();
+        final String clientSecret = githubClientProperties.clientSecret();
         return restTemplate.postForObject(
-                Auth.GET_NEW_ACCESS_TOKEN_URL,
+                getNewAccessTokenUrl(clientId, clientSecret, refreshToken),
                 new OAuthTokenRefreshRequest(clientId, clientSecret, refreshToken),
                 OAuthTokensResponse.class
         );
@@ -58,7 +57,7 @@ public class GithubRestTemplateClient implements GithubClient {
         final HttpEntity<Void> request = new HttpEntity<>(headers);
 
         return restTemplate.exchange(
-                Member.MEMBER_INFO_URL,
+                getMemberInfoUrl(),
                 GET,
                 request,
                 OAuthGithubUsernameResponse.class
@@ -70,7 +69,7 @@ public class GithubRestTemplateClient implements GithubClient {
         final List<OAuthCrewGithubPrResponse> responses = new ArrayList<>();
         int page = 1;
         while (true) {
-            List<OAuthCrewGithubPrResponse> prs = fetchPrs(accessToken, format(Member.LIST_PULL_REQUEST_URL + "?state=all&page=" + page, repo));
+            final List<OAuthCrewGithubPrResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page));
             if (prs.isEmpty()) break;
             responses.addAll(prs);
             page++;
