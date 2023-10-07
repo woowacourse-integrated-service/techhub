@@ -1,7 +1,6 @@
 package com.integrated.techhub.auth.application.client.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.integrated.techhub.pr.domain.PullRequest;

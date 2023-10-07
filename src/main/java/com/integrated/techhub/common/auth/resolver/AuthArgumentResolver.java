@@ -5,7 +5,6 @@ import com.integrated.techhub.common.auth.jwt.BearerTokenExtractor;
 import com.integrated.techhub.common.auth.jwt.JwtProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;

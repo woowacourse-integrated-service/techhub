@@ -1,7 +1,7 @@
 package com.integrated.techhub.auth.application.client;
 
-import com.integrated.techhub.auth.application.client.dto.request.GithubTokenRequest;
 import com.integrated.techhub.auth.application.client.dto.request.GithubTokenRefreshRequest;
+import com.integrated.techhub.auth.application.client.dto.request.GithubTokenRequest;
 import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -55,7 +54,6 @@ public class GithubRestTemplateClient implements GithubClient {
         final HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
         final HttpEntity<Void> request = new HttpEntity<>(headers);
-
         return restTemplate.exchange(
                 getMemberInfoUrl(),
                 GET,
@@ -82,7 +80,12 @@ public class GithubRestTemplateClient implements GithubClient {
         final HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
         final HttpEntity<Void> request = new HttpEntity<>(headers);
-        return restTemplate.exchange(url, HttpMethod.GET, request, new ParameterizedTypeReference<List<GithubPrInfoResponse>>() {}).getBody();
+        return restTemplate.exchange(
+                url,
+                GET,
+                request,
+                new ParameterizedTypeReference<List<GithubPrInfoResponse>>() {}
+        ).getBody();
     }
 
 }

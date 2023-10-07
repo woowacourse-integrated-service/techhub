@@ -1,14 +1,11 @@
 package com.integrated.techhub.auth.application.client.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
 
-import java.io.Serializable;
-
-import static com.fasterxml.jackson.databind.PropertyNamingStrategies.*;
+import static com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 
 @JsonNaming(SnakeCaseStrategy.class)
 public record OAuthTokensResponse (

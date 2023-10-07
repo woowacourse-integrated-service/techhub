@@ -1,6 +1,5 @@
 package com.integrated.techhub.pr.infra.persist;
 
-import com.integrated.techhub.pr.domain.PullRequest;
 import com.integrated.techhub.pr.infra.dto.PullRequestQueryResponse;
 import com.integrated.techhub.pr.infra.dto.QPullRequestQueryResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.integrated.techhub.mission.domain.QMission.mission;
-import static com.integrated.techhub.mission.domain.QStep.*;
+import static com.integrated.techhub.mission.domain.QStep.step;
 import static com.integrated.techhub.pr.domain.QPullRequest.pullRequest;
 
 @Repository
