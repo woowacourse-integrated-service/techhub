@@ -33,7 +33,7 @@ public class AuthService {
         return memberRepository.save(member).getId();
     }
 
-    public TokenResponse getAccessToken(final String email, final String password) {
+    public TokenResponse getTokens(final String email, final String password) {
         final Member member = memberRepository.getByEmail(email);
         member.validateMatchPassword(passwordEncoder, password);
         final String accessToken = jwtProvider.generateAccessToken(member.getId());
