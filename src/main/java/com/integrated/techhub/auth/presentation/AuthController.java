@@ -1,7 +1,7 @@
 package com.integrated.techhub.auth.presentation;
 
 import com.integrated.techhub.auth.application.AuthService;
-import com.integrated.techhub.auth.application.GithubOAuthClient;
+import com.integrated.techhub.auth.application.client.GithubRestTemplateClient;
 import com.integrated.techhub.auth.dto.request.LoginRequestDto;
 import com.integrated.techhub.auth.dto.request.SignUpRequest;
 import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
@@ -21,7 +21,7 @@ import java.net.URI;
 public class AuthController {
 
     private final AuthService authService;
-    private final GithubOAuthClient githubOAuthClient;
+    private final GithubRestTemplateClient githubRestTemplateClient;
 
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(@RequestBody @Valid final SignUpRequest request) {
@@ -40,7 +40,7 @@ public class AuthController {
             @Auth AuthProperties authProperties,
             @RequestParam final String code
     ) {
-        final OAuthTokensResponse tokensResponse = githubOAuthClient.getGithubTokens(code);
+        final OAuthTokensResponse tokensResponse = githubRestTemplateClient.getGithubTokens(code);
         final Long memberId = authProperties.memberId();
         authService.saveGithubTokens(tokensResponse.toAccessToken(memberId), tokensResponse.toRefreshToken(memberId));
         return ResponseEntity.ok().build();

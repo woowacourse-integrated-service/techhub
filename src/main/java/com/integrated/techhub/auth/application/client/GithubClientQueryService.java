@@ -1,4 +1,4 @@
-package com.integrated.techhub.auth.application;
+package com.integrated.techhub.auth.application.client;
 
 import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
@@ -18,10 +18,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class GithubOAuthClientQueryService {
+public class GithubClientQueryService {
 
     private final MemberRepository memberRepository;
-    private final GithubOAuthClient githubOAuthClient;
+    private final GithubRestTemplateClient githubRestTemplateClient;
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
@@ -33,13 +33,13 @@ public class GithubOAuthClientQueryService {
         // 액세스 토큰이 만료되지 않았다면 액세스 토큰으로 요청
         if (accessTokenOptional.isPresent()) {
             final String accessToken = accessTokenOptional.get().getToken();
-            return githubOAuthClient.getPrsByRepoName(accessToken, repo);
+            return githubRestTemplateClient.getPrsByRepoName(accessToken, repo);
         }
         // 액세스 토큰이 만료되었다면 리프레시 토큰으로 액세스 토큰 재발급 후 재발급 받은 액세스 토큰으로 요청
         if (refreshTokenOptional.isPresent()) {
             final String refreshToken = refreshTokenOptional.get().getToken();
-            final String accessToken = githubOAuthClient.getNewAccessToken(refreshToken).accessToken();
-            return githubOAuthClient.getPrsByRepoName(accessToken, repo);
+            final String accessToken = githubRestTemplateClient.getNewAccessToken(refreshToken).accessToken();
+            return githubRestTemplateClient.getPrsByRepoName(accessToken, repo);
         }
         // 리프레시 토큰까지 만료되었다면 유저에게 재로그인 요청
         throw new GithubRefreshTokenNotFoundException();

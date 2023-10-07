@@ -1,6 +1,6 @@
 package com.integrated.techhub.pr.presentation;
 
-import com.integrated.techhub.auth.application.GithubOAuthClientQueryService;
+import com.integrated.techhub.auth.application.client.GithubClientQueryService;
 import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
@@ -23,7 +23,7 @@ public class PullRequestController {
     private final MemberRepository memberRepository;
     private final PullRequestService pullRequestService;
     private final PullRequestQueryService pullRequestQueryService;
-    private final GithubOAuthClientQueryService githubOAuthClientQueryService;
+    private final GithubClientQueryService githubClientQueryService;
 
     @GetMapping("/mine/{missionId}")
     public ResponseEntity<List<PullRequestResponse>> getLoginUserPullRequestsByMissionId(
@@ -40,7 +40,7 @@ public class PullRequestController {
             @RequestParam final String repoName
     ) {
         final Member member = memberRepository.getById(authProperties.memberId());
-        final List<OAuthCrewGithubPrResponse> allPrsByRepoName = githubOAuthClientQueryService.getPrsByRepoName(authProperties.memberId(), repoName);
+        final List<OAuthCrewGithubPrResponse> allPrsByRepoName = githubClientQueryService.getPrsByRepoName(authProperties.memberId(), repoName);
         final List<OAuthCrewGithubPrResponse> myPrs = allPrsByRepoName.stream()
                 .filter(pr -> pr.title().contains(member.getNickname()))
                 .toList();
