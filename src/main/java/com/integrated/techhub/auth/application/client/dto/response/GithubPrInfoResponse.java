@@ -6,7 +6,7 @@ import com.integrated.techhub.pr.domain.type.State;
 
 import java.util.Date;
 
-public record OAuthCrewGithubPrResponse(
+public record GithubPrInfoResponse(
         @JsonProperty("html_url") String url,
         @JsonProperty("title") String title,
         @JsonProperty("number") Integer number,

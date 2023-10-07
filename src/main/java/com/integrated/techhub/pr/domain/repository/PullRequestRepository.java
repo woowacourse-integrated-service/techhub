@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public interface PullRequestRepository extends JpaRepository<PullRequest, Long> {
 
-    @Query("select p from PullRequest p where p.title like %:nickname%")
-    List<PullRequest> findByTitleLikeNickname(@Param("nickname") final String nickname);
+    boolean existsByTitle(final String title);
 
 }

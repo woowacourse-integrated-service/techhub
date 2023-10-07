@@ -4,7 +4,7 @@ import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
 import com.integrated.techhub.auth.domain.repository.AccessTokenRepository;
 import com.integrated.techhub.auth.domain.repository.RefreshTokenRepository;
-import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.auth.exception.GithubRefreshTokenNotFoundException;
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.repository.MemberRepository;
@@ -25,7 +25,7 @@ public class GithubClientQueryService {
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public List<OAuthCrewGithubPrResponse> getPrsByRepoName(final Long memberId, final String repo) {
+    public List<GithubPrInfoResponse> getPrsByRepoName(final Long memberId, final String repo) {
         final Member member = memberRepository.getById(memberId);
         final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByMemberId(member.getId());
         final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByMemberId(member.getId());

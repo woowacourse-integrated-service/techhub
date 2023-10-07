@@ -2,7 +2,7 @@ package com.integrated.techhub.auth.application.client;
 
 import com.integrated.techhub.auth.application.client.dto.request.GithubOAuthTokenRequest;
 import com.integrated.techhub.auth.application.client.dto.request.OAuthTokenRefreshRequest;
-import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
 import lombok.RequiredArgsConstructor;
@@ -65,11 +65,11 @@ public class GithubRestTemplateClient implements GithubClient {
     }
 
     @Override
-    public List<OAuthCrewGithubPrResponse> getPrsByRepoName(final String accessToken, final String repo) {
-        final List<OAuthCrewGithubPrResponse> responses = new ArrayList<>();
+    public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
+        final List<GithubPrInfoResponse> responses = new ArrayList<>();
         int page = 1;
         while (true) {
-            final List<OAuthCrewGithubPrResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page));
+            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page));
             if (prs.isEmpty()) break;
             responses.addAll(prs);
             page++;
@@ -77,11 +77,11 @@ public class GithubRestTemplateClient implements GithubClient {
         return responses;
     }
 
-    private List<OAuthCrewGithubPrResponse> fetchPrs(final String accessToken, final String url) {
+    private List<GithubPrInfoResponse> fetchPrs(final String accessToken, final String url) {
         final HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
         final HttpEntity<Void> request = new HttpEntity<>(headers);
-        return restTemplate.exchange(url, HttpMethod.GET, request, new ParameterizedTypeReference<List<OAuthCrewGithubPrResponse>>() {}).getBody();
+        return restTemplate.exchange(url, HttpMethod.GET, request, new ParameterizedTypeReference<List<GithubPrInfoResponse>>() {}).getBody();
     }
 
 }

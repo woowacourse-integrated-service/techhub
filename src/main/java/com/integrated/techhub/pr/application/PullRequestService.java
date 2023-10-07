@@ -1,8 +1,7 @@
 package com.integrated.techhub.pr.application;
 
-import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.member.domain.Member;
-import com.integrated.techhub.member.domain.repository.MemberRepository;
 import com.integrated.techhub.mission.domain.Step;
 import com.integrated.techhub.mission.domain.repository.StepRepository;
 import com.integrated.techhub.pr.domain.PullRequest;
@@ -23,12 +22,11 @@ import java.util.regex.Pattern;
 public class PullRequestService {
 
     private final StepRepository stepRepository;
-    private final MemberRepository memberRepository;
     private final PullRequestRepository pullRequestRepository;
 
-    public void create(final Long memberId, final List<OAuthCrewGithubPrResponse> prsByRepoName) {
+    public void create(final Long memberId, final List<GithubPrInfoResponse> prsByRepoName) {
         final List<PullRequest> prs = new ArrayList<>();
-        for (OAuthCrewGithubPrResponse pr : prsByRepoName) {
+        for (GithubPrInfoResponse pr : prsByRepoName) {
             final List<Long> stepsInTitle = getStepInTitle(pr.title());
             for (Long stepNumber : stepsInTitle) {
                 final Step step = stepRepository.getByNumber(stepNumber);
@@ -36,7 +34,7 @@ public class PullRequestService {
                 prs.add(pullRequest);
             }
         }
-        isNotExistSaveOrElseUpdate(memberId, prs);
+        isNotExistSave(prs);
     }
 
     private List<Long> getStepInTitle(final String title) {
@@ -53,16 +51,10 @@ public class PullRequestService {
         return steps;
     }
 
-    private void isNotExistSaveOrElseUpdate(final Long memberId, final List<PullRequest> requests) {
-        Member member = memberRepository.getById(memberId);
-        for (PullRequest pullRequest : requests) {
-            final List<PullRequest> prs = pullRequestRepository.findByTitleLikeNickname(member.getNickname());
-            if (prs.isEmpty()) {
-                pullRequestRepository.save(pullRequest);
-            } else {
-                for (PullRequest pr : prs) {
-                    pr.update(pullRequest.getTitle(), pullRequest.getState());
-                }
+    private void isNotExistSave(final List<PullRequest> newPrs) {
+        for (PullRequest newPr : newPrs) {
+            if (!pullRequestRepository.existsByTitle(newPr.getTitle())) {
+                pullRequestRepository.save(newPr);
             }
         }
     }

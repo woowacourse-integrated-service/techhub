@@ -1,7 +1,7 @@
 package com.integrated.techhub.pr.presentation;
 
 import com.integrated.techhub.auth.application.client.GithubClientQueryService;
-import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
 import com.integrated.techhub.member.domain.Member;
@@ -35,13 +35,13 @@ public class PullRequestController {
     }
 
     @PutMapping("/sync/mine")
-    public ResponseEntity<List<OAuthCrewGithubPrResponse>> syncMyPrsByRepoName(
+    public ResponseEntity<List<GithubPrInfoResponse>> syncMyPrsByRepoName(
             @Auth final AuthProperties authProperties,
             @RequestParam final String repoName
     ) {
         final Member member = memberRepository.getById(authProperties.memberId());
-        final List<OAuthCrewGithubPrResponse> allPrsByRepoName = githubClientQueryService.getPrsByRepoName(authProperties.memberId(), repoName);
-        final List<OAuthCrewGithubPrResponse> myPrs = allPrsByRepoName.stream()
+        final List<GithubPrInfoResponse> allPrsByRepoName = githubClientQueryService.getPrsByRepoName(authProperties.memberId(), repoName);
+        final List<GithubPrInfoResponse> myPrs = allPrsByRepoName.stream()
                 .filter(pr -> pr.title().contains(member.getNickname()))
                 .toList();
         pullRequestService.create(authProperties.memberId(), myPrs);

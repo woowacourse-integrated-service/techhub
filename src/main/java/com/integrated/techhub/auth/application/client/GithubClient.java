@@ -1,6 +1,6 @@
 package com.integrated.techhub.auth.application.client;
 
-import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
 
@@ -13,6 +13,6 @@ public interface GithubClient {
 
     OAuthGithubUsernameResponse getGithubUsername(final String accessToken);
 
-    List<OAuthCrewGithubPrResponse> getPrsByRepoName(final String accessToken, final String repo);
+    List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo);
 
 }
