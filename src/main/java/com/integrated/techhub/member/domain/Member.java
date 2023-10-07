@@ -52,11 +52,7 @@ public class Member {
         this.password = passwordEncoder.encode(this.password);
     }
 
-    public void updateGithubUsername(final String githubUsername) {
-        this.githubUsername = githubUsername;
-    }
-
-    public void validateMatchPassword(final PasswordEncoder passwordEncoder, String password) {
+    public void validateMatchPassword(final PasswordEncoder passwordEncoder, final String password) {
         if (!passwordEncoder.isMatch(password, this.password)) {
             throw new PasswordNotMatchException();
         }
