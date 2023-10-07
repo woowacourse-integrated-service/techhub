@@ -24,6 +24,7 @@ public class PullRequestService {
     private final StepRepository stepRepository;
     private final PullRequestRepository pullRequestRepository;
 
+    // TODO: Require Refactor
     public void create(final Long memberId, final List<GithubPrInfoResponse> prsByRepoName) {
         final List<PullRequest> prs = new ArrayList<>();
         for (GithubPrInfoResponse pr : prsByRepoName) {
