@@ -24,7 +24,7 @@ public class PullRequestQueryRepositoryImpl implements PullRequestQueryRepositor
                         pullRequest.id,
                         step.number,
                         pullRequest.title,
-                        pullRequest.status.stringValue()
+                        pullRequest.state.stringValue()
                 ))
                 .from(pullRequest)
                 .innerJoin(step).on(pullRequest.stepId.eq(step.id))
