@@ -56,7 +56,7 @@ public class Member {
         this.githubUsername = githubUsername;
     }
 
-    public void matchedPassword(final PasswordEncoder passwordEncoder, String password) {
+    public void validateMatchPassword(final PasswordEncoder passwordEncoder, String password) {
         if (!passwordEncoder.isMatch(password, this.password)) {
             throw new PasswordNotMatchException();
         }
