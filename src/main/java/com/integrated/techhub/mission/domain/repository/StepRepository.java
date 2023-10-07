@@ -1,7 +1,7 @@
 package com.integrated.techhub.mission.domain.repository;
 
 import com.integrated.techhub.mission.domain.Step;
-import com.integrated.techhub.pr.exception.StepNotFoundException;
+import com.integrated.techhub.mission.domain.exception.StepNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
