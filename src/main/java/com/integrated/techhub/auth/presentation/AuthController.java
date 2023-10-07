@@ -4,7 +4,7 @@ import com.integrated.techhub.auth.application.AuthService;
 import com.integrated.techhub.auth.application.client.GithubRestTemplateClient;
 import com.integrated.techhub.auth.dto.request.LoginRequestDto;
 import com.integrated.techhub.auth.dto.request.SignUpRequest;
-import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
 import com.integrated.techhub.auth.dto.response.TokenResponseDto;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;

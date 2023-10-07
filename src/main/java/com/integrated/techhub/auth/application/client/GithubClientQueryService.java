@@ -4,7 +4,7 @@ import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
 import com.integrated.techhub.auth.domain.repository.AccessTokenRepository;
 import com.integrated.techhub.auth.domain.repository.RefreshTokenRepository;
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.auth.exception.GithubRefreshTokenNotFoundException;
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.repository.MemberRepository;

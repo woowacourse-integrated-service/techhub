@@ -1,7 +1,7 @@
 package com.integrated.techhub.pr.presentation;
 
 import com.integrated.techhub.auth.application.client.GithubClientQueryService;
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
 import com.integrated.techhub.member.domain.Member;

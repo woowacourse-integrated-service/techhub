@@ -1,4 +1,4 @@
-package com.integrated.techhub.auth.dto.request;
+package com.integrated.techhub.auth.application.client.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

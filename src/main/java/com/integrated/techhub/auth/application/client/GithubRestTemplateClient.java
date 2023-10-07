@@ -1,10 +1,10 @@
 package com.integrated.techhub.auth.application.client;
 
-import com.integrated.techhub.auth.dto.request.GithubOAuthTokenRequest;
-import com.integrated.techhub.auth.dto.request.OAuthTokenRefreshRequest;
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
-import com.integrated.techhub.auth.dto.response.OAuthGithubUsernameResponse;
-import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
+import com.integrated.techhub.auth.application.client.dto.request.GithubOAuthTokenRequest;
+import com.integrated.techhub.auth.application.client.dto.request.OAuthTokenRefreshRequest;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
 import com.integrated.techhub.auth.util.GithubApiConstants.Auth;
 import com.integrated.techhub.auth.util.GithubApiConstants.Member;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,8 +1,8 @@
 package com.integrated.techhub.auth.application.client;
 
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
-import com.integrated.techhub.auth.dto.response.OAuthGithubUsernameResponse;
-import com.integrated.techhub.auth.dto.response.OAuthTokensResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
 
 import java.util.List;
 

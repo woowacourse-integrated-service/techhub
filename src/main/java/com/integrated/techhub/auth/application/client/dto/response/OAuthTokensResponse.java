@@ -1,4 +1,4 @@
-package com.integrated.techhub.auth.dto.response;
+package com.integrated.techhub.auth.application.client.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.integrated.techhub.auth.domain.AccessToken;

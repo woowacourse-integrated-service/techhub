@@ -1,6 +1,6 @@
 package com.integrated.techhub.pr.application;
 
-import com.integrated.techhub.auth.dto.response.OAuthCrewGithubPrResponse;
+import com.integrated.techhub.auth.application.client.dto.response.OAuthCrewGithubPrResponse;
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.repository.MemberRepository;
 import com.integrated.techhub.mission.domain.Step;
