@@ -1,7 +1,7 @@
 package com.integrated.techhub.auth.application.client;
 
-import com.integrated.techhub.auth.application.client.dto.request.GithubOAuthTokenRequest;
-import com.integrated.techhub.auth.application.client.dto.request.OAuthTokenRefreshRequest;
+import com.integrated.techhub.auth.application.client.dto.request.GithubTokenRequest;
+import com.integrated.techhub.auth.application.client.dto.request.GithubTokenRefreshRequest;
 import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
@@ -33,7 +33,7 @@ public class GithubRestTemplateClient implements GithubClient {
         final String clientSecret = githubClientProperties.clientSecret();
         return restTemplate.postForObject(
                 getGithubTokenUrl(),
-                new GithubOAuthTokenRequest(clientId, clientSecret, code),
+                new GithubTokenRequest(clientId, clientSecret, code),
                 OAuthTokensResponse.class
         );
     }
@@ -44,7 +44,7 @@ public class GithubRestTemplateClient implements GithubClient {
         final String clientSecret = githubClientProperties.clientSecret();
         return restTemplate.postForObject(
                 getNewAccessTokenUrl(clientId, clientSecret, refreshToken),
-                new OAuthTokenRefreshRequest(clientId, clientSecret, refreshToken),
+                new GithubTokenRefreshRequest(clientId, clientSecret, refreshToken),
                 OAuthTokensResponse.class
         );
     }
