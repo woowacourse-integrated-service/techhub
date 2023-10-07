@@ -9,6 +9,7 @@ import java.util.List;
 public interface GithubClient {
 
     OAuthTokensResponse getGithubTokens(final String code);
+
     OAuthTokensResponse getNewAccessToken(final String refreshToken);
 
     OAuthGithubUsernameResponse getGithubUsername(final String accessToken);
