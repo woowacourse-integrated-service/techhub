@@ -16,6 +16,7 @@ public class AccessToken {
 
     @Id
     private Long id;
+
     @Indexed
     private Long memberId;
 
