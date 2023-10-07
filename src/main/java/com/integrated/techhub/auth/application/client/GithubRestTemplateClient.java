@@ -64,6 +64,7 @@ public class GithubRestTemplateClient implements GithubClient {
         ).getBody();
     }
 
+    // TODO: Require Refactor
     @Override
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
