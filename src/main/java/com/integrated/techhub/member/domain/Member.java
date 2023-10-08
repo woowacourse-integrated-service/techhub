@@ -52,8 +52,8 @@ public class Member {
         this.password = passwordEncoder.encode(this.password);
     }
 
-    public void validateMatchPassword(final PasswordEncoder passwordEncoder, final String password) {
-        if (!passwordEncoder.isMatch(password, this.password)) {
+    public void validateMatchPassword(final PasswordEncoder passwordEncoder, final String requestPassword) {
+        if (!passwordEncoder.isMatch(requestPassword, this.password)) {
             throw new PasswordNotMatchException();
         }
     }

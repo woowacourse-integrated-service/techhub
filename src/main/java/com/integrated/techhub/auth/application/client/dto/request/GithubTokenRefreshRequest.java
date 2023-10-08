@@ -9,7 +9,7 @@ public record GithubTokenRefreshRequest(
         String refreshToken
 ) {
 
-    public GithubTokenRefreshRequest(String clientId, String clientSecret, String refreshToken) {
+    public GithubTokenRefreshRequest(final String clientId, final String clientSecret, final String refreshToken) {
         this(clientId, clientSecret, "refresh_token", refreshToken);
     }
 
