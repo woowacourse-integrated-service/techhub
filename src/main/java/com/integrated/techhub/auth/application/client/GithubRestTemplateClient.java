@@ -66,26 +66,21 @@ public class GithubRestTemplateClient implements GithubClient {
     @Override
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
-        final List<String> getPrsRequestUrls = new ArrayList<>();
-//        int page = 1;
-//        while (true) {
-//            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page));
-//            if (prs.isEmpty()) break;
-//            responses.addAll(prs);
-//            page++;
-//        }
-        for (int page = 1; page <= 5; page++) {
-            getPrsRequestUrls.add(getListPullRequestUrl(repo, page));
-        }
-        System.out.println("getPrsRequestUrls = " + getPrsRequestUrls);
-        getPrsRequestUrls.parallelStream()
-                .forEach(url -> {
-                    System.out.println("실행");
-                    List<GithubPrInfoResponse> githubPrInfoResponses = fetchPrs(accessToken, url);
-                    responses.addAll(githubPrInfoResponses);
-                });
-        System.out.println("끝");
+        final List<String> prRequestUrls = createPrApiRequestUrls(repo, 4);
+
+        prRequestUrls.parallelStream()
+                .map(url -> fetchPrs(accessToken, url))
+                .forEach(githubPrInfoResponses -> responses.addAll(githubPrInfoResponses));
+
         return responses;
+    }
+
+    private List<String> createPrApiRequestUrls(final String repo, final int lastPage) {
+        List<String> prRequestUrls = new ArrayList<>();
+        for (int page = 1; page <= lastPage; page++) {
+            prRequestUrls.add(getListPullRequestUrl(repo, page));
+        }
+        return prRequestUrls;
     }
 
     private List<GithubPrInfoResponse> fetchPrs(final String accessToken, final String url) {
