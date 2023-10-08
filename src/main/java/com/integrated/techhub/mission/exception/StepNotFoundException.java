@@ -1,4 +1,4 @@
-package com.integrated.techhub.mission.domain.exception;
+package com.integrated.techhub.mission.exception;
 
 import com.integrated.techhub.common.exception.ErrorCode;
 import com.integrated.techhub.common.exception.TechHubException;
