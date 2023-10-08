@@ -1,6 +1,6 @@
 package com.integrated.techhub.member.domain;
 
-import com.integrated.techhub.auth.infra.encode.BCryptPasswordEncoder;
+import com.integrated.techhub.common.auth.encode.BCryptPasswordEncoder;
 import com.integrated.techhub.member.fixture.MemberFixture;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package com.integrated.techhub.pr.domain;
 
-import com.integrated.techhub.pr.domain.type.Status;
+import com.integrated.techhub.pr.domain.type.State;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,12 +26,16 @@ public class PullRequest {
     private Long memberId;
 
     @Column(nullable = false)
-    private Long missionId;
+    private Long stepId;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false)
     private String title;
 
     @Enumerated(value = STRING)
-    private Status status;
+    private State state;
 
+    public void update(final String title, final State state) {
+        this.title = title;
+        this.state = state;
+    }
 }

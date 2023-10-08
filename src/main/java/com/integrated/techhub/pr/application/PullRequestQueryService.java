@@ -1,8 +1,8 @@
 package com.integrated.techhub.pr.application;
 
-import com.integrated.techhub.pr.domain.PullRequest;
-import com.integrated.techhub.pr.domain.repository.PullRequestRepository;
-import com.integrated.techhub.pr.dto.response.GetPullRequestResponse;
+import com.integrated.techhub.pr.dto.response.PullRequestResponse;
+import com.integrated.techhub.pr.infra.dto.PullRequestQueryResponse;
+import com.integrated.techhub.pr.infra.persist.PullRequestQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +14,12 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class PullRequestQueryService {
 
-    private final PullRequestRepository pullRequestRepository;
+    private final PullRequestQueryRepository pullRequestQueryRepository;
 
-    public List<GetPullRequestResponse> getPullRequestByMemberId(Long memberId) {
-        List<PullRequest> pullRequests = pullRequestRepository.findByMemberId(memberId);
-        return pullRequests.stream()
-                .map(GetPullRequestResponse::of)
+    public List<PullRequestResponse> getMyPullRequestsByMissionId(final Long memberId, final Long missionId) {
+        final List<PullRequestQueryResponse> pullRequestsQueryResponses = pullRequestQueryRepository.findByMemberIdAndMissionId(memberId, missionId);
+        return pullRequestsQueryResponses.stream()
+                .map(PullRequestResponse::from)
                 .toList();
     }
 

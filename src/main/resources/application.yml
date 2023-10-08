@@ -4,7 +4,8 @@ spring:
     redis:
       host: localhost
       port: ${REDIS_OUT_BOUND_PORT}
-
+  main:
+    allow-bean-definition-overriding: true
 ---
 # application
 spring:
@@ -14,12 +15,10 @@ spring:
 ---
 # jwt
 spring:
-  config:
-    import: classpath:/jwt-env.properties
   auth:
     jwt:
       header: ${JWT_HEADER}
-      secret: ${JWT_SECRET}
+      secretKey: ${JWT_SECRET}
       accessExp: ${JWT_ACCESS_EXP}
       refreshExp: ${JWT_REFRESH_EXP}
       prefix: ${JWT_PREFIX}
@@ -39,3 +38,14 @@ spring:
           starttls:
             enable: true
             required: true
+
+---
+# oauth 2.0
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${LOCAL_GITHUB_CLIENT_ID}
+            client-secret: ${LOCAL_GITHUB_CLIENT_SECRET}

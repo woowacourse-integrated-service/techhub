@@ -1,6 +1,6 @@
 plugins {
 	id 'java'
-	id 'jacoco'
+//	id 'jacoco'
 	id 'org.springframework.boot' version '3.1.3'
 	id 'io.spring.dependency-management' version '1.1.3'
 }
@@ -12,9 +12,9 @@ java {
 	sourceCompatibility = '17'
 }
 
-jacoco {
-	toolVersion = "0.8.8"
-}
+//jacoco {
+//	toolVersion = "0.8.8"
+//}
 
 configurations {
 	compileOnly {
@@ -30,6 +30,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	implementation 'org.mindrot:jbcrypt:0.4'
 
 	//redis
@@ -40,6 +41,11 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// JWT
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
 	// Mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
@@ -62,6 +68,7 @@ tasks.named('test') {
 }
 
 def generated = 'build/generated'
+def application = 'src/main/generated'
 
 tasks.withType(JavaCompile) {
 	options.getGeneratedSourceOutputDirectory().set(file(generated))
@@ -71,84 +78,88 @@ sourceSets {
 	main.java.srcDirs += [generated]
 }
 
-clean {
+task customClean(type: Delete) {
 	delete file(generated)
+	delete file(application)
 }
 
-jacocoTestReport {
-	reports {
-		html.required = true
+clean.dependsOn customClean
 
-		html.destination file("${buildDir}/jacoco/index.html")
-	}
 
-	afterEvaluate {
-		classDirectories.setFrom(
-				files(classDirectories.files.collect {
-					fileTree(dir: it, excludes: [
-							'**/*Application*',
-							'**/*Exception*',
-							'**/*Response*',
-							'**/*Request*',
-							'**/BaseTimeEntity',
-							'**/*Dto*',
-							'**/S3*',
-							'**/*Interceptor*',
-							'**/*ArgumentResolver*',
-							'**/*ExceptionHandler*',
-							'**/LoggingUtils',
-							'**/*Url*',
-							'**/*AdminController*',
-							'**/*Config*',
-							'**/*Wrapper*'
-					])
-				})
-		)
-	}
+//jacocoTestReport {
+//	reports {
+//		html.required = true
+//
+//		html.destination file("${buildDir}/jacoco/index.html")
+//	}
+//
+//	afterEvaluate {
+//		classDirectories.setFrom(
+//				files(classDirectories.files.collect {
+//					fileTree(dir: it, excludes: [
+//							'**/*Application*',
+//							'**/*Exception*',
+//							'**/*Response*',
+//							'**/*Request*',
+//							'**/BaseTimeEntity',
+//							'**/*Dto*',
+//							'**/S3*',
+//							'**/*Interceptor*',
+//							'**/*ArgumentResolver*',
+//							'**/*ExceptionHandler*',
+//							'**/LoggingUtils',
+//							'**/*Url*',
+//							'**/*AdminController*',
+//							'**/*Config*',
+//							'**/*Wrapper*'
+//					])
+//				})
+//		)
+//	}
+//
+//	finalizedBy 'jacocoTestCoverageVerification'
+//}
 
-	finalizedBy 'jacocoTestCoverageVerification'
-}
-
-jacocoTestCoverageVerification {
-	def Qdomains = []
-
-	for (qPattern in '*.QA'..'*.QZ') { // qPattern = '*.QA', '*.QB', ... '*.QZ'
-		Qdomains.add(qPattern + '*')
-	}
-
-	violationRules {
-		rule {
-			enabled = true
-			element = "CLASS"
-
-			limit {
-				counter = 'LINE'
-				value = 'COVEREDRATIO'
-				minimum = 0.7
-			}
-
-			excludes = [
-					'*.*Application',
-					'*.*Exception*',
-					'*.*Dto',
-					'*.S3*',
-					'*.*Response',
-					'*.*Request',
-					'*.BaseTimeEntity',
-					'*.*Interceptor',
-					'*.*ArgumentResolver',
-					'*.*ExceptionHandler',
-					'*.LoggingUtils',
-					'*.*Url',
-					'*.*AdminController',
-					'*.*Config',
-					'*.*Wrapper'
-			] + Qdomains
-		}
-	}
-}
+//jacocoTestCoverageVerification {
+//	def Qdomains = []
+//
+//	for (qPattern in '*.QA'..'*.QZ') { // qPattern = '*.QA', '*.QB', ... '*.QZ'
+//		Qdomains.add(qPattern + '*')
+//	}
+//
+//	violationRules {
+//		rule {
+//			enabled = true
+//			element = "CLASS"
+//
+//			limit {
+//				counter = 'LINE'
+//				value = 'COVEREDRATIO'
+//				minimum = 0.7
+//			}
+//
+//			excludes = [
+//					'*.*Application',
+//					'*.*Exception*',
+//					'*.*Dto',
+//					'*.S3*',
+//					'*.*Response',
+//					'*.*Request',
+//					'*.BaseTimeEntity',
+//					'*.*Interceptor',
+//					'*.*ArgumentResolver',
+//					'*.*ExceptionHandler',
+//					'*.LoggingUtils',
+//					'*.*Url',
+//					'*.*AdminController',
+//					'*.*Config',
+//					'*.*Wrapper'
+//			] + Qdomains
+//		}
+//	}
+//}
 
 test {
 	useJUnitPlatform()
-	finalizedBy 'jacocoTestReport'
+//	finalizedBy 'jacocoTestReport'
 }

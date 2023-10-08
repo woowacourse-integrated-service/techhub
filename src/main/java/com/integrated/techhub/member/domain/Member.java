@@ -1,11 +1,8 @@
 package com.integrated.techhub.member.domain;
 
 import com.integrated.techhub.auth.domain.PasswordEncoder;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.integrated.techhub.member.exception.PasswordNotMatchException;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -51,8 +48,13 @@ public class Member {
     @Enumerated(value = STRING)
     private Position position;
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
+    public void encodePassword(final PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
 
+    public void validateMatchPassword(final PasswordEncoder passwordEncoder, final String requestPassword) {
+        if (!passwordEncoder.isMatch(requestPassword, this.password)) {
+            throw new PasswordNotMatchException();
+        }
+    }
 }
