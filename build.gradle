@@ -33,6 +33,9 @@ dependencies {
 	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	implementation 'org.mindrot:jbcrypt:0.4'
 
+	// WebClient
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
 	//redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation("it.ozimov:embedded-redis:0.7.2")
