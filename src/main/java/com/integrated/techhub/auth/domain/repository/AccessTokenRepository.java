@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface AccessTokenRepository extends CrudRepository<AccessToken, Long> {
 
-    Optional<AccessToken> findByMemberId(final Long memberId);
+    Optional<AccessToken> findByMemberIdAndType(final Long memberId, final String type);
 
 }

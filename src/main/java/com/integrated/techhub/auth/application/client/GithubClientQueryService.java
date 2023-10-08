@@ -27,8 +27,8 @@ public class GithubClientQueryService {
 
     public List<GithubPrInfoResponse> getPrsByRepoName(final Long memberId, final String repo) {
         final Member member = memberRepository.getById(memberId);
-        final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByMemberId(member.getId());
-        final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByMemberId(member.getId());
+        final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByMemberIdAndType(member.getId(), "GITHUB");
+        final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByMemberIdAndType(member.getId(), "GITHUB");
 
         // 액세스 토큰이 만료되지 않았다면 액세스 토큰으로 요청
         if (accessTokenOptional.isPresent()) {

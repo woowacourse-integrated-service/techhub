@@ -20,9 +20,10 @@ public class AccessToken {
     @Indexed
     private Long memberId;
 
-    private String token;
-
+    @Indexed
     private String type;
+
+    private String token;
 
     @TimeToLive
     private Long ttl;
