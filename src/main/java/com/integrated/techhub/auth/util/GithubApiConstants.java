@@ -1,5 +1,7 @@
 package com.integrated.techhub.auth.util;
 
+import static com.integrated.techhub.auth.util.GithubApiConstants.Member.*;
+
 public class GithubApiConstants {
 
     public static class Auth {
@@ -32,15 +34,15 @@ public class GithubApiConstants {
          * */
         @Deprecated
         public static final String MEMBER_INFO_URL = "https://api.github.com/user";
-        public static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls?state=all&page=%d&per_page=100";
+        public static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls?state=all&page=%d&per_page=%d";
     }
 
     public static String getMemberInfoUrl() {
-        return Member.MEMBER_INFO_URL;
+        return MEMBER_INFO_URL;
     }
 
-    public static String getListPullRequestUrl(final String repoName, final int page) {
-        return String.format(Member.LIST_PULL_REQUEST_URL, repoName, page);
+    public static String getListPullRequestUrl(final String repoName, final int page, final int per_page) {
+        return String.format(LIST_PULL_REQUEST_URL, repoName, page, per_page);
     }
 
 }

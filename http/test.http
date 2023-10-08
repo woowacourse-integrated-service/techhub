@@ -1,0 +1,2 @@
+PUT localhost:8080/pull-requests/sync/mine?repoName=jwp-dashboard-jdbc
+Authorization: bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibWVtYmVySWQiOjEsImV4cCI6MTY5Njc5MzUxNiwiaWF0IjoxNjk2NzkxNzE2fQ.xPODn8aPNtXLof9My-buU0uZb8lwOBQ8PfkEtjrmskA

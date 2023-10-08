@@ -11,6 +11,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ import static org.springframework.http.HttpMethod.GET;
 
 @Component
 @RequiredArgsConstructor
-public class GithubRestTemplateClient implements GithubClient {
+public class RestTemplateGithubClient implements GithubClient {
 
     private static final RestTemplate restTemplate = new RestTemplate();
 
@@ -62,25 +63,18 @@ public class GithubRestTemplateClient implements GithubClient {
         ).getBody();
     }
 
-    // TODO: Require Refactor
     @Override
+    @Deprecated // maintenance mode
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
-        final List<String> prRequestUrls = createPrApiRequestUrls(repo, 4);
-
-        prRequestUrls.parallelStream()
-                .map(url -> fetchPrs(accessToken, url))
-                .forEach(githubPrInfoResponses -> responses.addAll(githubPrInfoResponses));
-
-        return responses;
-    }
-
-    private List<String> createPrApiRequestUrls(final String repo, final int lastPage) {
-        List<String> prRequestUrls = new ArrayList<>();
-        for (int page = 1; page <= lastPage; page++) {
-            prRequestUrls.add(getListPullRequestUrl(repo, page));
+        int page = 1;
+        while (true) {
+            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page, 100));
+            if (prs.isEmpty()) break;
+            responses.addAll(prs);
+            page++;
         }
-        return prRequestUrls;
+        return responses;
     }
 
     private List<GithubPrInfoResponse> fetchPrs(final String accessToken, final String url) {
