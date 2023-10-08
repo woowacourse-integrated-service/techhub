@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PullRequestRepository extends JpaRepository<PullRequest, Long> {
 
-    boolean existsByTitle(final String title);
+    boolean existsByStepIdAndTitle(final Long stepId, final String title);
 
 }

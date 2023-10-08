@@ -53,7 +53,7 @@ public class PullRequestService {
 
     private void isNotExistSave(final List<PullRequest> newPrs) {
         for (PullRequest newPr : newPrs) {
-            if (!pullRequestRepository.existsByTitle(newPr.getTitle())) {
+            if (!pullRequestRepository.existsByStepIdAndTitle(newPr.getStepId(), newPr.getTitle())) {
                 pullRequestRepository.save(newPr);
             }
         }
