@@ -32,7 +32,7 @@ public class GithubApiConstants {
          * */
         @Deprecated
         public static final String MEMBER_INFO_URL = "https://api.github.com/user";
-        public static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls?state=all&page=%d";
+        public static final String LIST_PULL_REQUEST_URL = "https://api.github.com/repos/woowacourse/%s/pulls?state=all&page=%d&per_page=100";
     }
 
     public static String getMemberInfoUrl() {

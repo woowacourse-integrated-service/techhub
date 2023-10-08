@@ -58,7 +58,7 @@ public class JwtProvider {
                     .build()
                     .parseClaimsJws(token);
         } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException("토큰 만료임");
+            throw new IllegalArgumentException("테크허브 액세스 토큰 만료");
         } catch (Exception e) {
             throw new TokenInvalidException();
         }
