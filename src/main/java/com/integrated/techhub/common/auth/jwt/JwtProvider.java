@@ -2,6 +2,7 @@ package com.integrated.techhub.common.auth.jwt;
 
 import com.integrated.techhub.auth.domain.RefreshToken;
 import com.integrated.techhub.auth.domain.repository.RefreshTokenRepository;
+import com.integrated.techhub.auth.domain.type.Type;
 import com.integrated.techhub.common.auth.jwt.exception.TokenInvalidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+import static com.integrated.techhub.auth.domain.type.Type.TECHHUB;
 import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 
 @Component
@@ -30,6 +32,7 @@ public class JwtProvider {
         return refreshTokenRepository.save(RefreshToken.builder()
                 .memberId(memberId)
                 .token(refreshToken)
+                .type(TECHHUB)
                 .ttl(jwtProperties.refreshExp())
                 .build());
     }

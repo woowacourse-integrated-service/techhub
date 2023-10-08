@@ -1,5 +1,6 @@
 package com.integrated.techhub.auth.domain;
 
+import com.integrated.techhub.auth.domain.type.Type;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
@@ -20,7 +21,7 @@ public class RefreshToken {
     private Long memberId;
 
     @Indexed
-    private String type;
+    private Type type;
 
     private String token;
 

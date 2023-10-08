@@ -5,6 +5,7 @@ import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
 import com.integrated.techhub.auth.domain.repository.AccessTokenRepository;
 import com.integrated.techhub.auth.domain.repository.RefreshTokenRepository;
+import com.integrated.techhub.auth.domain.type.Type;
 import com.integrated.techhub.auth.exception.GithubRefreshTokenNotFoundException;
 import com.integrated.techhub.member.domain.Member;
 import com.integrated.techhub.member.domain.repository.MemberRepository;
@@ -14,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
+import static com.integrated.techhub.auth.domain.type.Type.GITHUB;
 
 @Service
 @RequiredArgsConstructor
@@ -27,8 +30,8 @@ public class GithubClientQueryService {
 
     public List<GithubPrInfoResponse> getPrsByRepoName(final Long memberId, final String repo) {
         final Member member = memberRepository.getById(memberId);
-        final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByMemberIdAndType(member.getId(), "GITHUB");
-        final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByMemberIdAndType(member.getId(), "GITHUB");
+        final Optional<AccessToken> accessTokenOptional = accessTokenRepository.findByMemberIdAndType(member.getId(), GITHUB);
+        final Optional<RefreshToken> refreshTokenOptional = refreshTokenRepository.findByMemberIdAndType(member.getId(), GITHUB);
 
         // 액세스 토큰이 만료되지 않았다면 액세스 토큰으로 요청
         if (accessTokenOptional.isPresent()) {

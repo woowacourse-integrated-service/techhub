@@ -1,5 +1,6 @@
 package com.integrated.techhub.auth.domain;
 
+import com.integrated.techhub.auth.domain.type.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class AccessToken {
     private Long memberId;
 
     @Indexed
-    private String type;
+    private Type type;
 
     private String token;
 
