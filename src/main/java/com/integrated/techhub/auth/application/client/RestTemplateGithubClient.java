@@ -11,7 +11,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +62,11 @@ public class RestTemplateGithubClient implements GithubClient {
         ).getBody();
     }
 
+    /*
+     * 조회 속도가 느리긴 하지만 API 호출 횟수를 적게 사용
+     * 인증된 유저 기준 시간당 5,000회
+     * using: 사용자가 기다릴 필요가 없는 스케쥴러
+     * */
     @Override
     @Deprecated // maintenance mode
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {

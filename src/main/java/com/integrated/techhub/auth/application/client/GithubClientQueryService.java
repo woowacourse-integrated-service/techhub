@@ -23,10 +23,10 @@ import static com.integrated.techhub.auth.domain.type.Type.GITHUB;
 public class GithubClientQueryService {
 
     private final MemberRepository memberRepository;
-    private final RestTemplateGithubClient restTemplateGithubClient;
-    private final WebClientGithubClient webClientGithubClient;
     private final AccessTokenRepository accessTokenRepository;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final RestTemplateGithubClient restTemplateGithubClient;
+    private final WebClientGithubClient webClientGithubClient;
 
     public List<GithubPrInfoResponse> getPrsByRepoName(final Long memberId, final String repo) {
         final Member member = memberRepository.getById(memberId);
