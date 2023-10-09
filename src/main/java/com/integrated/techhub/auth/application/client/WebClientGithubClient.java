@@ -21,6 +21,9 @@ import static com.integrated.techhub.auth.util.GithubApiConstants.*;
 @RequiredArgsConstructor
 public class WebClientGithubClient implements GithubClient {
 
+    private static final int LAST_PAGE = 40;
+    private static final int PER_PAGE = 10;
+
     private final WebClient webClient;
     private final GithubClientProperties githubClientProperties;
 
@@ -69,7 +72,7 @@ public class WebClientGithubClient implements GithubClient {
     @Override
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
-        final List<String> prRequestUrls = createPrApiRequestUrls(repo, 80);
+        final List<String> prRequestUrls = createPrApiRequestUrls(repo, LAST_PAGE);
 
         Flux.fromIterable(prRequestUrls)
                 .flatMap(url -> fetchPrs(accessToken, url))
@@ -82,7 +85,7 @@ public class WebClientGithubClient implements GithubClient {
     private List<String> createPrApiRequestUrls(final String repo, final int lastPage) {
         List<String> prRequestUrls = new ArrayList<>();
         for (int page = 1; page <= lastPage; page++) {
-            prRequestUrls.add(getListPullRequestUrl(repo, page, 10));
+            prRequestUrls.add(getListPullRequestUrl(repo, page, PER_PAGE));
         }
         return prRequestUrls;
     }

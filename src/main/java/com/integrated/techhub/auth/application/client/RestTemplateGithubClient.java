@@ -22,6 +22,7 @@ import static org.springframework.http.HttpMethod.GET;
 @RequiredArgsConstructor
 public class RestTemplateGithubClient implements GithubClient {
 
+    private static final int MAX_PER_PAGE = 100;
     private static final RestTemplate restTemplate = new RestTemplate();
 
     private final GithubClientProperties githubClientProperties;
@@ -73,7 +74,7 @@ public class RestTemplateGithubClient implements GithubClient {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
         int page = 1;
         while (true) {
-            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page, 100));
+            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page, MAX_PER_PAGE));
             if (prs.isEmpty()) break;
             responses.addAll(prs);
             page++;
