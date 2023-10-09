@@ -2,7 +2,6 @@ package com.integrated.techhub.common.auth.jwt;
 
 import com.integrated.techhub.auth.domain.RefreshToken;
 import com.integrated.techhub.auth.domain.repository.RefreshTokenRepository;
-import com.integrated.techhub.auth.domain.type.Type;
 import com.integrated.techhub.common.auth.jwt.exception.TokenInvalidException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

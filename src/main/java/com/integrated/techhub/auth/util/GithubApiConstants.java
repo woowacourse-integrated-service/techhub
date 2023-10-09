@@ -1,6 +1,7 @@
 package com.integrated.techhub.auth.util;
 
-import static com.integrated.techhub.auth.util.GithubApiConstants.Member.*;
+import static com.integrated.techhub.auth.util.GithubApiConstants.Member.LIST_PULL_REQUEST_URL;
+import static com.integrated.techhub.auth.util.GithubApiConstants.Member.MEMBER_INFO_URL;
 
 public class GithubApiConstants {
 
