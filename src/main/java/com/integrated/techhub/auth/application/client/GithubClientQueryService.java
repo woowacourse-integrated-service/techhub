@@ -37,7 +37,6 @@ public class GithubClientQueryService {
         if (accessTokenOptional.isPresent()) {
             final String accessToken = accessTokenOptional.get().getToken();
             List<GithubPrInfoResponse> prsByRepoName = webClientGithubClient.getPrsByRepoName(accessToken, repo);
-            System.out.println("API 요청 모두 완료");
             return prsByRepoName;
         }
         // 액세스 토큰이 만료되었다면 리프레시 토큰으로 액세스 토큰 재발급 후 재발급 받은 액세스 토큰으로 요청
