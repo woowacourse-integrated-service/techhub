@@ -52,7 +52,7 @@ public class Member {
         this.password = passwordEncoder.encode(this.password);
     }
 
-    public void changeEncodedPassword(final PasswordEncoder passwordEncoder, final String newPassword) {
+    public void encodeAndChangePassword(final PasswordEncoder passwordEncoder, final String newPassword) {
         this.password = passwordEncoder.encode(newPassword);
     }
 
