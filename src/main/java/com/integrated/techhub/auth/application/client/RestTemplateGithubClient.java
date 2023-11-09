@@ -20,8 +20,9 @@ import static org.springframework.http.HttpMethod.GET;
 
 @Component
 @RequiredArgsConstructor
-public class GithubRestTemplateClient implements GithubClient {
+public class RestTemplateGithubClient implements GithubClient {
 
+    private static final int MAX_PER_PAGE = 100;
     private static final RestTemplate restTemplate = new RestTemplate();
 
     private final GithubClientProperties githubClientProperties;
@@ -62,13 +63,18 @@ public class GithubRestTemplateClient implements GithubClient {
         ).getBody();
     }
 
-    // TODO: Require Refactor
+    /*
+     * 조회 속도가 느리긴 하지만 API 호출 횟수를 적게 사용
+     * 인증된 유저 기준 시간당 5,000회
+     * using: 사용자가 기다릴 필요가 없는 스케쥴러
+     * */
     @Override
+    @Deprecated // maintenance mode
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
         int page = 1;
         while (true) {
-            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page));
+            final List<GithubPrInfoResponse> prs = fetchPrs(accessToken, getListPullRequestUrl(repo, page, MAX_PER_PAGE));
             if (prs.isEmpty()) break;
             responses.addAll(prs);
             page++;

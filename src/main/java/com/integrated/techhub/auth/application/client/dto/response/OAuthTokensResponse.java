@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.integrated.techhub.auth.domain.AccessToken;
 import com.integrated.techhub.auth.domain.RefreshToken;
-import com.integrated.techhub.auth.domain.type.Type;
 
 import static com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
 import static com.integrated.techhub.auth.domain.type.Type.GITHUB;
