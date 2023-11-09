@@ -23,9 +23,6 @@ import java.util.regex.Pattern;
 @Transactional
 @RequiredArgsConstructor
 public class PullRequestService {
-
-    // 2시간
-    private static final Long DEFAULT_TIMEOUT = 120L * 1000 * 60;
     private final StepRepository stepRepository;
     private final PullRequestRepository pullRequestRepository;
     private final SseEmittersInMemoryRepository sseEmittersInMemoryRepository;
@@ -66,16 +63,4 @@ public class PullRequestService {
         }
     }
 
-    public SseEmitter connectSse(final Long memberId) {
-        final SseEmitter sseEmitter = new SseEmitter(DEFAULT_TIMEOUT);
-        sseEmittersInMemoryRepository.save(memberId, sseEmitter);
-        try {
-            sseEmitter.send(SseEmitter.event()
-                    .name("connect")
-                    .data("connected"));
-        } catch (IOException e) {
-            throw new SseConnectionRefusedException();
-        }
-        return sseEmitter;
-    }
 }
