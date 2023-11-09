@@ -2,10 +2,8 @@ package com.integrated.techhub.sse;
 
 import com.integrated.techhub.common.auth.annotation.Auth;
 import com.integrated.techhub.common.auth.resolver.AuthProperties;
-import com.integrated.techhub.pr.application.PullRequestService;
 import com.integrated.techhub.sse.exception.SseConnectionRefusedException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,13 +13,12 @@ import java.io.IOException;
 
 import static org.springframework.http.MediaType.TEXT_EVENT_STREAM_VALUE;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class SseController {
 
     // 2시간
-    private static final Long DEFAULT_TIMEOUT = 120L * 1000 * 60;
+    private static final Long DEFAULT_TIMEOUT = 180L * 1000;
     private final SseEmittersInMemoryRepository sseEmittersInMemoryRepository;
 
     @GetMapping(value = "/connect", produces = TEXT_EVENT_STREAM_VALUE)
