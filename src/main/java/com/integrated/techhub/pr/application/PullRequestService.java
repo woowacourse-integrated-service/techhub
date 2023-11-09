@@ -6,10 +6,14 @@ import com.integrated.techhub.mission.domain.repository.StepRepository;
 import com.integrated.techhub.mission.exception.StepNotFoundException;
 import com.integrated.techhub.pr.domain.PullRequest;
 import com.integrated.techhub.pr.domain.repository.PullRequestRepository;
+import com.integrated.techhub.sse.SseEmittersInMemoryRepository;
+import com.integrated.techhub.sse.exception.SseConnectionRefusedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,8 +24,11 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class PullRequestService {
 
+    // 2시간
+    private static final Long DEFAULT_TIMEOUT = 120L * 1000 * 60;
     private final StepRepository stepRepository;
     private final PullRequestRepository pullRequestRepository;
+    private final SseEmittersInMemoryRepository sseEmittersInMemoryRepository;
 
     // TODO: Require Refactor
     public void create(final Long memberId, final List<GithubPrInfoResponse> prsByRepoName) {
@@ -59,4 +66,16 @@ public class PullRequestService {
         }
     }
 
+    public SseEmitter connectSse(final Long memberId) {
+        final SseEmitter sseEmitter = new SseEmitter(DEFAULT_TIMEOUT);
+        sseEmittersInMemoryRepository.save(memberId, sseEmitter);
+        try {
+            sseEmitter.send(SseEmitter.event()
+                    .name("connect")
+                    .data("connected"));
+        } catch (IOException e) {
+            throw new SseConnectionRefusedException();
+        }
+        return sseEmitter;
+    }
 }

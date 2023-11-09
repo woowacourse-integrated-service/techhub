@@ -1,4 +1,4 @@
-package com.integrated.techhub.common.sse.exception;
+package com.integrated.techhub.sse.exception;
 
 import com.integrated.techhub.common.exception.ErrorCode;
 import com.integrated.techhub.common.exception.TechHubException;
