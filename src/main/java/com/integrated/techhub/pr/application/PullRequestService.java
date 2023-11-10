@@ -25,7 +25,6 @@ import java.util.regex.Pattern;
 public class PullRequestService {
     private final StepRepository stepRepository;
     private final PullRequestRepository pullRequestRepository;
-    private final SseEmittersInMemoryRepository sseEmittersInMemoryRepository;
 
     // TODO: Require Refactor
     public void create(final Long memberId, final List<GithubPrInfoResponse> prsByRepoName) {
