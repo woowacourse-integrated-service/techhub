@@ -27,25 +27,29 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	implementation 'org.mindrot:jbcrypt:0.4'
 
 	// Resilience4j-CircuitBreaker
-	implementation 'io.github.resilience4j:resilience4j-spring-boot3'
+	implementation "org.springframework.boot:spring-boot-starter-aop"
+	implementation group: 'io.github.resilience4j', name: 'resilience4j-spring-boot3', version: '2.1.0'
+
 
 	// WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 	//redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation("it.ozimov:embedded-redis:0.7.2")
+	implementation "it.ozimov:embedded-redis:0.7.2"
 
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 	annotationProcessor 'org.projectlombok:lombok'
 
 	// JWT

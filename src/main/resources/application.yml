@@ -60,16 +60,18 @@ resilience4j:
   circuitbreaker:
     configs:
       default:
+        sliding-window-type: COUNT_BASED
         registerHealthIndicator: true
-        slidingWindowSize: 10
-        minimumNumberOfCalls: 5
+        slidingWindowSize: 3
+        minimumNumberOfCalls: 1
         permittedNumberOfCallsInHalfOpenState: 3
         automaticTransitionFromOpenToHalfOpenEnabled: true
         waitDurationInOpenState: 5s
         failureRateThreshold: 50
         eventConsumerBufferSize: 10
+        recordFailurePredicate: com.integrated.techhub.resilience4j.circuitbreaker.config.CircuitRecordFailurePredicate
   instances:
-    orderService:
+    webClientGithubClient:
       baseConfig: default
   timelimiter:
     configs:

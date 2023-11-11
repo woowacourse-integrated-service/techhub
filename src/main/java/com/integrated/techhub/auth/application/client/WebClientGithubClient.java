@@ -5,7 +5,10 @@ import com.integrated.techhub.auth.application.client.dto.request.GithubTokenReq
 import com.integrated.techhub.auth.application.client.dto.response.GithubPrInfoResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthGithubUsernameResponse;
 import com.integrated.techhub.auth.application.client.dto.response.OAuthTokensResponse;
+import com.integrated.techhub.resilience4j.circuitbreaker.exception.CircuitBreakerInvalidException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -19,6 +22,7 @@ import static com.integrated.techhub.auth.util.GithubApiConstants.*;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class WebClientGithubClient implements GithubClient {
 
     private static final int LAST_PAGE = 40;
@@ -28,6 +32,7 @@ public class WebClientGithubClient implements GithubClient {
     private final GithubClientProperties githubClientProperties;
 
     @Override
+    @CircuitBreaker(name = "webClientGithubClient", fallbackMethod = "throwBadGateway")
     public OAuthTokensResponse getGithubTokens(final String code) {
         final String clientId = githubClientProperties.clientId();
         final String clientSecret = githubClientProperties.clientSecret();
@@ -40,6 +45,7 @@ public class WebClientGithubClient implements GithubClient {
     }
 
     @Override
+    @CircuitBreaker(name = "webClientGithubClient", fallbackMethod = "throwBadGateway")
     public OAuthTokensResponse getNewAccessToken(final String refreshToken) {
         final String clientId = githubClientProperties.clientId();
         final String clientSecret = githubClientProperties.clientSecret();
@@ -53,6 +59,7 @@ public class WebClientGithubClient implements GithubClient {
 
     @Override
     @Deprecated
+    @CircuitBreaker(name = "webClientGithubClient", fallbackMethod = "throwBadGateway")
     public OAuthGithubUsernameResponse getGithubUsername(final String accessToken) {
         final HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
@@ -69,11 +76,12 @@ public class WebClientGithubClient implements GithubClient {
      * 인증된 유저 기준 시간당 5,000회
      * using: 사용자가 직접 요청하는 동기화 API
      * */
+
     @Override
+    @CircuitBreaker(name = "webClientGithubClient", fallbackMethod = "fallback")
     public List<GithubPrInfoResponse> getPrsByRepoName(final String accessToken, final String repo) {
         final List<GithubPrInfoResponse> responses = new ArrayList<>();
         final List<String> prRequestUrls = createPrApiRequestUrls(repo, LAST_PAGE);
-
         Flux.fromIterable(prRequestUrls)
                 .flatMap(url -> fetchPrs(accessToken, url))
                 .collectList()
@@ -98,6 +106,10 @@ public class WebClientGithubClient implements GithubClient {
                 .bodyToFlux(GithubPrInfoResponse.class)
                 .collectList()
                 .flux();
+    }
+
+    private List<GithubPrInfoResponse> fallback(Throwable t) {
+        throw new CircuitBreakerInvalidException();
     }
 
 }
