@@ -1,6 +1,6 @@
-PUT localhost:8080/pull-requests/sync/mine?repoName=jwp-dashboard-jdbc
-Authorization: bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibWVtYmVySWQiOjEsImV4cCI6MTY5Njg1MDcxMywiaWF0IjoxNjk2ODQ4OTEzfQ.tT9--wUY8qHWsttfKBXWPQUuzUVp8onoX6pJcRl_vgY
+GET localhost:8080/pull-requests/ranking/1?sortBy=STEP
 
 ###
 
-GET localhost:8080/pull-requests/test
+PUT localhost:8080/pull-requests/sync/mine/1?repoName=jwt-reactoring
+Authorization: bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibWVtYmVySWQiOjEsImV4cCI6MTY5OTc2NzYyOSwiaWF0IjoxNjk5NzY1ODI5fQ.8qxdAurticysEzBHJeBy6Vnx7F04oFYCrVpB02TB8xE

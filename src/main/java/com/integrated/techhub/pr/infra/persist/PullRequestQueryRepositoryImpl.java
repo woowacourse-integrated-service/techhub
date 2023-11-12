@@ -1,7 +1,11 @@
 package com.integrated.techhub.pr.infra.persist;
 
+import com.integrated.techhub.pr.domain.type.SortBy;
 import com.integrated.techhub.pr.infra.dto.PullRequestQueryResponse;
 import com.integrated.techhub.pr.infra.dto.QPullRequestQueryResponse;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -29,13 +33,34 @@ public class PullRequestQueryRepositoryImpl implements PullRequestQueryRepositor
                 .from(pullRequest)
                 .innerJoin(step).on(pullRequest.stepId.eq(step.id))
                 .innerJoin(step.mission, mission)
-                .fetchJoin()
                 .where(
                         mission.id.eq(step.mission.id),
                         pullRequest.memberId.eq(memberId),
                         mission.id.eq(missionId)
                 )
                 .fetch();
+    }
+
+    @Override
+    public List<PullRequestQueryResponse> findSortAndOrderBy(final String sortBy, final Long missionId) {
+        return queryFactory.select(new QPullRequestQueryResponse(
+                        pullRequest.id,
+                        step.number,
+                        pullRequest.title,
+                        pullRequest.state.stringValue()
+                ))
+                .from(pullRequest)
+                .innerJoin(step).on(pullRequest.stepId.eq(step.id))
+                .innerJoin(step.mission, mission)
+                .where(mission.id.eq(missionId))
+                .orderBy(getSorted(sortBy))
+                .fetch();
+    }
+
+    private OrderSpecifier getSorted(final String sortBy) {
+        if (SortBy.TITLE.name().equals(sortBy)) return pullRequest.title.desc();
+        if (SortBy.STEP.name().equals(sortBy)) return pullRequest.stepId.desc();
+        return pullRequest.id.desc();
     }
 
 }

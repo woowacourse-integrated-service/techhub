@@ -109,7 +109,7 @@ public class WebClientGithubClient implements GithubClient {
     }
 
     private List<GithubPrInfoResponse> fallback(Throwable t) {
-        throw new CircuitBreakerInvalidException();
+        throw new CircuitBreakerInvalidException(t);
     }
 
 }

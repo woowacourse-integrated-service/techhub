@@ -1,6 +1,5 @@
 package com.integrated.techhub.pr.domain;
 
-import com.integrated.techhub.common.entity.BaseTimeEntity;
 import com.integrated.techhub.pr.domain.type.State;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +16,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = PROTECTED)
-public class PullRequest extends BaseTimeEntity {
+public class PullRequest {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
