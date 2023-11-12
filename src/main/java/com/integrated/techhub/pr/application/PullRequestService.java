@@ -6,14 +6,11 @@ import com.integrated.techhub.mission.domain.repository.StepRepository;
 import com.integrated.techhub.mission.exception.StepNotFoundException;
 import com.integrated.techhub.pr.domain.PullRequest;
 import com.integrated.techhub.pr.domain.repository.PullRequestRepository;
-import com.integrated.techhub.sse.SseEmittersInMemoryRepository;
-import com.integrated.techhub.sse.exception.SseConnectionRefusedException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -23,11 +20,12 @@ import java.util.regex.Pattern;
 @Transactional
 @RequiredArgsConstructor
 public class PullRequestService {
+    private final RedisTemplate redisTemplate;
     private final StepRepository stepRepository;
     private final PullRequestRepository pullRequestRepository;
 
     // TODO: Require Refactor
-    public void create(final Long memberId, final List<GithubPrInfoResponse> prsByRepoName) {
+    public void create(final Long missionId, final Long memberId, final List<GithubPrInfoResponse> prsByRepoName) {
         final List<PullRequest> prs = new ArrayList<>();
         for (GithubPrInfoResponse pr : prsByRepoName) {
             final List<Long> stepsInTitle = getStepInTitle(pr.title());
@@ -37,7 +35,7 @@ public class PullRequestService {
                 prs.add(pullRequest);
             }
         }
-        isNotExistSave(prs);
+        isNotExistSave(missionId, prs);
     }
 
     private List<Long> getStepInTitle(final String title) {
@@ -54,9 +52,10 @@ public class PullRequestService {
         return steps;
     }
 
-    private void isNotExistSave(final List<PullRequest> newPrs) {
+    private void isNotExistSave(final Long missionId, final List<PullRequest> newPrs) {
         for (PullRequest newPr : newPrs) {
             if (!pullRequestRepository.existsByStepIdAndTitle(newPr.getStepId(), newPr.getTitle())) {
+                redisTemplate.opsForZSet().add(missionId + " ranking", newPr.getTitle(), newPr.getStepId());
                 pullRequestRepository.save(newPr);
             }
         }

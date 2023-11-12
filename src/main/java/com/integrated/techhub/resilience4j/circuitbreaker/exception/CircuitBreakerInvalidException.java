@@ -3,7 +3,7 @@ package com.integrated.techhub.resilience4j.circuitbreaker.exception;
 import com.integrated.techhub.common.exception.ErrorCode;
 import com.integrated.techhub.common.exception.TechHubException;
 
-import static org.springframework.http.HttpStatus.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 public class CircuitBreakerInvalidException extends TechHubException {
 

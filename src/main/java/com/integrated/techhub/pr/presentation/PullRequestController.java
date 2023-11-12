@@ -9,15 +9,13 @@ import com.integrated.techhub.member.domain.repository.MemberRepository;
 import com.integrated.techhub.pr.application.PullRequestQueryService;
 import com.integrated.techhub.pr.application.PullRequestService;
 import com.integrated.techhub.pr.dto.response.PullRequestResponse;
+import com.integrated.techhub.pr.exception.PullRequestRankingResponse;
 import com.integrated.techhub.sse.SseEmittersInMemoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
-import static com.integrated.techhub.pr.domain.type.SortBy.validateValue;
 
 @RestController
 @RequestMapping("/pull-requests")
@@ -40,12 +38,8 @@ public class PullRequestController {
     }
 
     @GetMapping("/ranking/{missionId}")
-    public ResponseEntity<List<PullRequestResponse>> getRankingOrderBy(
-            @PathVariable final Long missionId,
-            @Param("sortBy") final String sortBy
-    ) {
-        validateValue(sortBy);
-        final List<PullRequestResponse> responses = pullRequestQueryService.getPrsSortBy(sortBy, missionId);
+    public ResponseEntity<List<PullRequestRankingResponse>> getRankingOrderBy(@PathVariable final Long missionId) {
+        final List<PullRequestRankingResponse> responses = pullRequestQueryService.getPrsSortBy(missionId);
         return ResponseEntity.ok(responses);
     }
 
@@ -60,7 +54,7 @@ public class PullRequestController {
         final List<GithubPrInfoResponse> myPrs = allPrsByRepoName.stream()
                 .filter(pr -> pr.title().contains(member.getNickname()))
                 .toList();
-        pullRequestService.create(authProperties.memberId(), myPrs);
+        pullRequestService.create(missionId, authProperties.memberId(), myPrs);
         final List<PullRequestResponse> updatedPrs = pullRequestQueryService.getMyPullRequestsByMissionId(authProperties.memberId(), missionId);
         sseEmittersInMemoryRepository.sendAllEmitters(updatedPrs);
         return ResponseEntity.ok().build();
