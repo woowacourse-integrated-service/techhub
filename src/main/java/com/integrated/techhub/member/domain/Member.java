@@ -52,6 +52,10 @@ public class Member {
         this.password = passwordEncoder.encode(this.password);
     }
 
+    public void encodeAndChangePassword(final PasswordEncoder passwordEncoder, final String newPassword) {
+        this.password = passwordEncoder.encode(newPassword);
+    }
+
     public void validateMatchPassword(final PasswordEncoder passwordEncoder, final String requestPassword) {
         if (!passwordEncoder.isMatch(requestPassword, this.password)) {
             throw new PasswordNotMatchException();
